@@ -6,36 +6,17 @@ import {
 } from 'react-native-gesture-handler';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {useSelector, useDispatch} from 'react-redux';
 import {DraggableCard, MotionlessCard} from '../Components';
 import {NoteItemAttributes} from '../Interfaces';
 
-import {Structure, RentalType} from '../Interfaces';
-function getData(): NoteItemAttributes[] {
-  return [...Array(5)].map((d, index) => {
-    return {
-      key: JSON.stringify(index),
-      address: '용현동 123',
-      deposit: 40000000,
-      floor: 3,
-      map: null,
-      monthlyFee: 300000,
-      numberOfRoom: 1,
-      photoUri: ['uri'],
-      rentalType: RentalType.RentalMontlyFee,
-      size: 33,
-      agentName: '부동산 이름',
-      agentTel: '010-1234-1234',
-      evaluationFactors: [],
-      managementFee: 0,
-      roomStructure: Structure.OneOpen,
-      memo: '',
-      options: [],
-    };
-  });
+interface Store {
+  Note: NoteItemAttributes[];
 }
 
 const MainScreen = gestureHandlerRootHOC(() => {
-  const [data, setData] = useState(getData());
+  const notes = useSelector<Store, NoteItemAttributes[]>(state => state.Note);
+  const [data, setData] = useState(notes);
   const ref = useRef<RNGHFlatList<NoteItemAttributes>>(null);
   const [isEditMode, setEditMode] = useState(false);
   if (isEditMode) {
