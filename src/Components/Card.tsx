@@ -80,10 +80,12 @@ const styles = StyleSheet.create({
   },
   text18: {
     fontSize: 18,
+    color: '#000000',
     fontWeight: '600',
     marginBottom: 5,
   },
   text14: {
+    color: '#000000',
     fontSize: 14,
   },
 });

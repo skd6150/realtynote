@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {View, StyleSheet, FlatList, Pressable} from 'react-native';
+import {View, StyleSheet, FlatList, Pressable, Text} from 'react-native';
 import {
   FlatList as RNGHFlatList,
   gestureHandlerRootHOC,
@@ -58,6 +58,7 @@ const MainScreen = gestureHandlerRootHOC(() => {
           }}>
           <View style={styles.delete}>
             <Icon name="delete" size={24} color="#666666" />
+            <Text style={styles.deleteFont}>삭제</Text>
           </View>
         </Pressable>
       </View>
@@ -90,6 +91,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 55,
     backgroundColor: '#FFFFFF',
+  },
+  deleteFont: {
+    fontSize: 12,
   },
 });
 
