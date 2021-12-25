@@ -6,5 +6,8 @@ module.exports = {
   rules: {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
+    rules: {
+      'prettier/prettier': ['error', {endOfLine: 'auto'}],
+    },
   },
 };
