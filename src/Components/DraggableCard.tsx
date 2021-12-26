@@ -1,8 +1,8 @@
-import React, {Dispatch} from 'react';
-import {View, Text, Pressable, StyleSheet} from 'react-native';
+import React from 'react';
+import {Pressable} from 'react-native';
 import Animated from 'react-native-reanimated';
 import {RenderItemParams} from 'react-native-draggable-flatlist';
-import {NoteItemAttributes, RentalType} from '../Interfaces';
+import {NoteItemAttributes} from '../Interfaces';
 import Card from './Card';
 
 const DraggableCard = ({item, drag}: RenderItemParams<NoteItemAttributes>) => {

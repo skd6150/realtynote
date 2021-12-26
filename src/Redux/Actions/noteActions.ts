@@ -1,4 +1,3 @@
-import {AnyAction} from 'redux';
 import {NoteItemAttributes} from '../../Interfaces';
 
 export const ADD_NOTE = 'NOTE/ADD' as const;
