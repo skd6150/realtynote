@@ -6,15 +6,19 @@ import {
 } from 'react-native-gesture-handler';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {DraggableCard, MotionlessCard} from '../Components';
-import {NoteItemAttributes} from '../Interfaces';
+import {NoteItemAttributes, MainScreenNavigationProps} from '../Interfaces';
 
 interface Store {
   Note: NoteItemAttributes[];
 }
 
-const MainScreen = gestureHandlerRootHOC(() => {
+type MainScreenProps = {
+  navigation: MainScreenNavigationProps;
+};
+
+const MainScreen = gestureHandlerRootHOC(({navigation}: MainScreenProps) => {
   const notes = useSelector<Store, NoteItemAttributes[]>(state => state.Note);
   const [data, setData] = useState(notes);
   const ref = useRef<RNGHFlatList<NoteItemAttributes>>(null);
@@ -50,7 +54,11 @@ const MainScreen = gestureHandlerRootHOC(() => {
         <FlatList
           data={data}
           renderItem={({item}) => (
-            <MotionlessCard item={item} setEditMode={setEditMode} />
+            <MotionlessCard
+              item={item}
+              setEditMode={setEditMode}
+              pressCallback={() => navigation.navigate('Note', item)}
+            />
           )}
         />
       </View>
