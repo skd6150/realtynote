@@ -1,6 +1,6 @@
 import React from 'react';
 import {Pressable} from 'react-native';
-import {NoteItemAttributes, MainScreenNavigationProps} from '../Interfaces';
+import {NoteItemAttributes} from '../Interfaces';
 import Card from './Card';
 
 interface MotionlessCardProps {

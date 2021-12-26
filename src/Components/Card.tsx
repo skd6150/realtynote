@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Pressable, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {RadioButton} from 'react-native-paper';
 import {useStringfyRentalType} from '../Hooks';
 import {NoteItemAttributes} from '../Interfaces';
