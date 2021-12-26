@@ -4,7 +4,7 @@ import {NoteItemAttributes} from '.';
 
 export type StackParamList = {
   Main: undefined;
-  Note: NoteItemAttributes | undefined;
+  Browse: NoteItemAttributes;
 };
 
 export type MainScreenNavigationProps = NativeStackNavigationProp<
@@ -12,9 +12,9 @@ export type MainScreenNavigationProps = NativeStackNavigationProp<
   'Main'
 >;
 
-export type NoteScreenNavigationProps = NativeStackNavigationProp<
+export type BrowseScreenNavigationProps = NativeStackNavigationProp<
   StackParamList,
-  'Note'
+  'Browse'
 >;
 
-export type NoteScreenRouteProps = RouteProp<StackParamList, 'Note'>;
+export type BrowseScreenRouteProps = RouteProp<StackParamList, 'Browse'>;

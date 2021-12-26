@@ -57,7 +57,7 @@ const MainScreen = gestureHandlerRootHOC(({navigation}: MainScreenProps) => {
             <MotionlessCard
               item={item}
               setEditMode={setEditMode}
-              pressCallback={() => navigation.navigate('Note', item)}
+              pressCallback={() => navigation.navigate('Browse', item)}
             />
           )}
         />

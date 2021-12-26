@@ -8,6 +8,7 @@ export {
 
 export {
   type MainScreenNavigationProps,
-  type NoteScreenNavigationProps,
-  type NoteScreenRouteProps,
+  type BrowseScreenNavigationProps,
+  type BrowseScreenRouteProps,
+  type StackParamList,
 } from './navigation.interface';
