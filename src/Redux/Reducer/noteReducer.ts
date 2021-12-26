@@ -1,4 +1,4 @@
-import {NoteItemAttributes, RentalType, Structure} from '../../Interfaces';
+import {NoteItemAttributes} from '../../Interfaces';
 import {
   ADD_NOTE,
   DEL_NOTE,
@@ -6,63 +6,7 @@ import {
   SWAP_NOTE,
   NoteActions,
 } from '../Actions/noteActions';
-
-const initialState: NoteItemAttributes[] = [
-  {
-    key: '0',
-    address: '용현동 111',
-    deposit: 50000000,
-    floor: 3,
-    map: null,
-    monthlyFee: 0,
-    photoUri: ['uri'],
-    rentalType: RentalType.Rental,
-    size: 33,
-    agentName: '부동산 이름',
-    agentTel: '010-1234-1234',
-    evaluationFactors: [],
-    managementFee: 0,
-    roomStructure: Structure.OneOpen,
-    memo: '',
-    options: [],
-  },
-  {
-    key: '1',
-    address: '용현동 222',
-    deposit: 6000000,
-    floor: 3,
-    map: null,
-    monthlyFee: 300000,
-    photoUri: ['uri'],
-    rentalType: RentalType.RentalMontlyFee,
-    size: 33,
-    agentName: '부동산 이름',
-    agentTel: '010-1234-1234',
-    evaluationFactors: [],
-    managementFee: 0,
-    roomStructure: Structure.OneOpen,
-    memo: '',
-    options: [],
-  },
-  {
-    key: '2',
-    address: '용현동 333',
-    deposit: 80000000,
-    floor: 3,
-    map: null,
-    monthlyFee: 0,
-    photoUri: ['uri'],
-    rentalType: RentalType.Trading,
-    size: 33,
-    agentName: '부동산 이름',
-    agentTel: '010-1234-1234',
-    evaluationFactors: [],
-    managementFee: 0,
-    roomStructure: Structure.OneOpen,
-    memo: '',
-    options: [],
-  },
-];
+import initialState from '../initialState';
 
 const reducer = (state = initialState, action: NoteActions) => {
   switch (action.type) {
