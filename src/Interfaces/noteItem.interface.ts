@@ -25,7 +25,8 @@ export enum Structure {
 }
 
 interface Option {
-  [item: string]: boolean;
+  name: string;
+  available: boolean;
 }
 
 export class EvaluationFactor {
@@ -38,18 +39,6 @@ export class EvaluationFactor {
     this.evaluations = evaluatoins;
     this.idx = idx;
   }
-
-  getEvaluation: () => string = () => {
-    return this.evaluations[this.idx];
-  };
-
-  getFactorName: () => string = () => {
-    return this.name;
-  };
-
-  setIdx: (idx: number) => void = (idx: number) => {
-    this.idx = idx;
-  };
 }
 
 export interface NoteItemAttributes {
@@ -70,5 +59,6 @@ export interface NoteItemAttributes {
   agentName?: string; // 공인중개사 상호명
   agentTel?: string; // 공인중개사 연락처
   memo: string; // 메모
-  evaluationFactors: EvaluationFactor[]; // 평가요소
+  sturctureEvaluationFactors: EvaluationFactor[]; // 구조평가요소
+  environmentEvaluationFactors: EvaluationFactor[]; // 환경평가요소
 }
