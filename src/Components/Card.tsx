@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
 import {RadioButton} from 'react-native-paper';
-import {NoteItemAttributes, RentalType} from '../Interfaces';
+import {useStringfyRentalType} from '../Hooks';
+import {NoteItemAttributes} from '../Interfaces';
 
 interface CardProps {
   data: NoteItemAttributes;
@@ -10,19 +11,6 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = (props: CardProps) => {
   const [checked, setChecked] = useState(false);
-
-  const StringfyRentalType = (item: NoteItemAttributes) => {
-    switch (item.rentalType) {
-      case RentalType.Rental:
-        return `${item.rentalType} ${item.deposit / 10000}`;
-      case RentalType.RentalMontlyFee:
-        return `${item.rentalType} ${item.deposit / 10000}/${
-          item.monthlyFee / 10000
-        }`;
-      case RentalType.Trading:
-        return `${item.rentalType} ${item.deposit / 10000}`;
-    }
-  };
 
   return (
     <View style={styles.cardWrapper}>
@@ -42,7 +30,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       )}
       <View style={styles.noImage} />
       <View style={styles.textWrapper}>
-        <Text style={styles.text18}>{StringfyRentalType(props.data)}</Text>
+        <Text style={styles.text18}>{useStringfyRentalType(props.data)}</Text>
         <Text style={styles.text14}>{props.data.address}</Text>
         <Text style={styles.text14}>
           {props.data.floor}층 {props.data.size}평
