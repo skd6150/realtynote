@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     borderRadius: 10,
     alignItems: 'center',
+    zIndex: 2,
   },
   row: {
     alignSelf: 'stretch',

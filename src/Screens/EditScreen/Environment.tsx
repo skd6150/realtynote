@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 12,
     borderRadius: 10,
-    // alignItems: 'center',
+    zIndex: 1,
   },
   row: {
     alignSelf: 'stretch',

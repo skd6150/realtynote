@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBFBFB',
     borderColor: '#DDE1E5',
     borderRadius: 10,
+    zIndex: 9999,
   },
 });
 
