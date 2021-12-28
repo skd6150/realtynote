@@ -67,15 +67,16 @@ const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
             <Text>지도</Text>
           </View>
           <Text style={[styles.sectionLabel, styles.text18]}>구조/면적</Text>
-          {item.roofFloor && (
-            <Row
-              label="층/건물층수"
-              content={`${item.floor}층/${item.roofFloor}층`}
-            />
-          )}
-          {!item.roofFloor && <Row label="층" content={`${item.floor}층`} />}
-          <Row label="구조" content={item.roomStructure} />
-          {item.size && <Row label="전용면적" content={`${item.size}평`} />}
+          <Row
+            label="층/건물층수"
+            content={`${item.floor}층/${item.roofFloor}층`}
+          />
+          <Row label="층" content={`${item.floor}층`} />
+          <Row
+            label="구조"
+            content={item.roomStructure.evaluations[item.roomStructure.idx]}
+          />
+          <Row label="전용면적" content={`${item.size}평`} />
           {item.sturctureEvaluationFactors.map((factor, index) => (
             <Row
               key={`sturctureEvaluationFactor-${index}`}
@@ -116,8 +117,8 @@ const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
           </View>
           <Devider />
           <Text style={[styles.sectionLabel, styles.text18]}>공인중개사</Text>
-          {item.agentName && <Row label="상호명" content={item.agentName} />}
-          {item.agentTel && <Row label="연락처" content={item.agentTel} />}
+          <Row label="상호명" content={item.realtorName} />
+          <Row label="연락처" content={item.realtorTel} />
         </View>
       </ScrollView>
     );
