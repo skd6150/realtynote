@@ -50,14 +50,14 @@ export interface NoteItemAttributes {
   monthlyFee: number; // 월세
   managementFee: number; // 관리비
   photoUri: string[]; // 사진 URI
-  roofFloor?: number | string; // 전체층
-  floor: number | string; // 해당층
-  roomStructure: Structure; // 방 개수
-  size?: number; // 전용면적 (평)
+  roofFloor: EvaluationFactor; // 전체층
+  floor: EvaluationFactor; // 해당층
+  roomStructure: EvaluationFactor; // 방 개수
+  size: number; // 전용면적 (평)
   direction?: Direction; // 방향
   options: Option[]; // 옵션
-  agentName?: string; // 공인중개사 상호명
-  agentTel?: string; // 공인중개사 연락처
+  realtorName: string; // 공인중개사 상호명
+  realtorTel: string; // 공인중개사 연락처
   memo: string; // 메모
   sturctureEvaluationFactors: EvaluationFactor[]; // 구조평가요소
   environmentEvaluationFactors: EvaluationFactor[]; // 환경평가요소
