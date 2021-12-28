@@ -61,6 +61,13 @@ const MainScreen = gestureHandlerRootHOC(({navigation}: MainScreenProps) => {
             />
           )}
         />
+        <Pressable
+          style={styles.floatingButton}
+          onPress={() => {
+            navigation.navigate('Edit');
+          }}>
+          <Icon name="add" size={36} color="#FFFFFF" />
+        </Pressable>
       </View>
     );
   }
@@ -73,6 +80,17 @@ const styles = StyleSheet.create({
   },
   flatListWrapper: {
     flex: 1,
+  },
+  floatingButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: '#2196f3',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   delete: {
     flex: 0,
