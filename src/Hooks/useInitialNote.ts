@@ -2,6 +2,7 @@ import {
   NoteItemAttributes,
   RentalType,
   Structure,
+  Direction,
   EvaluationFactor,
 } from '../Interfaces';
 
@@ -15,8 +16,16 @@ export default function () {
     monthlyFee: 0,
     managementFee: 0,
     photoUri: [],
-    floor: 1,
-    roomStructure: Structure.OneOpen,
+    roofFloor: new EvaluationFactor(
+      '전체층',
+      [...Array(40).keys()].map(f => `${f + 1}층`),
+    ),
+    floor: new EvaluationFactor(
+      '해당층',
+      ['반지하', '옥탑방'].concat([...Array(40).keys()].map(f => `${f + 1}층`)),
+    ),
+    roomStructure: new EvaluationFactor('구조', Object.values(Structure)),
+    size: 5,
     options: [
       {name: '에어컨', available: false},
       {name: '냉장고', available: false},
@@ -32,10 +41,12 @@ export default function () {
       {name: '싱크대', available: false},
     ],
     memo: '',
+    realtorName: '',
+    realtorTel: '',
     sturctureEvaluationFactors: [
       new EvaluationFactor('엘레베이터', ['있음', '없음']),
       new EvaluationFactor('주차', ['가능', '불가']),
-      new EvaluationFactor('방향', ['북향', '동향', '남향', '서향']),
+      new EvaluationFactor('방향', Object.values(Direction)),
       new EvaluationFactor('채광', ['양호', '미흡']),
     ],
     environmentEvaluationFactors: [
