@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
   backButton: {
     position: 'absolute',
     margin: 10,
+    backgroundColor: 'transparent',
     zIndex: 999,
   },
 });
