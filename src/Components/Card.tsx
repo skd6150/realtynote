@@ -9,12 +9,12 @@ interface CardProps {
   isEditMode: boolean;
 }
 
-const Card: React.FC<CardProps> = (props: CardProps) => {
+const Card: React.FC<CardProps> = ({data, isEditMode}: CardProps) => {
   const [checked, setChecked] = useState(false);
 
   return (
     <View style={styles.cardWrapper}>
-      {props.isEditMode && (
+      {isEditMode && (
         <View style={styles.buttonWrapper}>
           <RadioButton
             value="delete"
@@ -30,12 +30,14 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       )}
       <View style={styles.noImage} />
       <View style={styles.textWrapper}>
-        <Text style={styles.text18}>{useStringfyRentalType(props.data)}</Text>
-        <Text style={styles.text14}>{props.data.address}</Text>
+        <Text style={styles.text18}>{useStringfyRentalType(data)}</Text>
+        <Text style={styles.text14}>{data.address}</Text>
         <Text style={styles.text14}>
-          {props.data.floor}층 {props.data.size}평
+          {data.floor.evaluations[data.floor.idx]} {data.size}평
         </Text>
-        <Text style={styles.text14}>{props.data.roomStructure}</Text>
+        <Text style={styles.text14}>
+          {data.roomStructure.evaluations[data.roomStructure.idx]}
+        </Text>
       </View>
     </View>
   );

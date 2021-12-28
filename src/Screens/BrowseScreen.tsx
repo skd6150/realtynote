@@ -69,9 +69,10 @@ const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
           <Text style={[styles.sectionLabel, styles.text18]}>구조/면적</Text>
           <Row
             label="층/건물층수"
-            content={`${item.floor}층/${item.roofFloor}층`}
+            content={`${item.floor.evaluations[item.floor.idx]}/${
+              item.roofFloor.evaluations[item.roofFloor.idx]
+            }`}
           />
-          <Row label="층" content={`${item.floor}층`} />
           <Row
             label="구조"
             content={item.roomStructure.evaluations[item.roomStructure.idx]}
@@ -88,10 +89,12 @@ const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
           <Text style={[styles.sectionLabel, styles.text18]}>옵션/환경</Text>
           <Row
             label="옵션"
-            content={item.options
-              .filter(item => item.available)
-              .map(item => item.name)
-              .join(', ')}
+            content={
+              item.options
+                .filter(item => item.available)
+                .map(item => item.name)
+                .join(', ') || '없음'
+            }
           />
           {item.environmentEvaluationFactors.map((factor, index) => (
             <Row
