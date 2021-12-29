@@ -84,9 +84,9 @@ const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
           <Text style={[styles.label, styles.text16]}>임대조건</Text>
           <View style={styles.content}>
             <Text style={styles.text20}>{useStringfyRentalType(note)}</Text>
-            {note.managementFee !== 0 && (
+            {parseInt(note.managementFee || '0') !== 0 && (
               <Text style={styles.text12}>
-                (관리비 {note.managementFee / 10000}만원)
+                (관리비 {parseInt(note.managementFee) / 10000}만원)
               </Text>
             )}
           </View>
