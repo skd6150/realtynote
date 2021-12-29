@@ -25,10 +25,10 @@ export const updateNote = (key: string, note: NoteItemAttributes) => {
   };
 };
 
-export const SWAP_NOTE = 'NOTE/SWAP' as const;
-export const swapNote = (notes: NoteItemAttributes[]) => {
+export const REARRANGE_NOTES = 'NOTE/REARRANGE' as const;
+export const rearrangeNotes = (notes: NoteItemAttributes[]) => {
   return {
-    type: SWAP_NOTE,
+    type: REARRANGE_NOTES,
     notes,
   };
 };
@@ -37,4 +37,4 @@ export type NoteActions =
   | ReturnType<typeof addNote>
   | ReturnType<typeof delNote>
   | ReturnType<typeof updateNote>
-  | ReturnType<typeof swapNote>;
+  | ReturnType<typeof rearrangeNotes>;

@@ -3,7 +3,7 @@ import {
   ADD_NOTE,
   DEL_NOTE,
   UPDATE_NOTE,
-  SWAP_NOTE,
+  REARRANGE_NOTES,
   NoteActions,
 } from '../Actions/noteActions';
 import initialState from '../initialState';
@@ -14,12 +14,14 @@ const reducer = (state = initialState, action: NoteActions) => {
       return state.concat(action.note);
     case DEL_NOTE:
       return state.filter((note: NoteItemAttributes) => {
-        note.key !== action.key;
+        return note.key !== action.key;
       });
     case UPDATE_NOTE:
       const idx = state.findIndex(note => note.key === action.key);
       state.splice(idx, 0, action.note);
       return state;
+    case REARRANGE_NOTES:
+      return action.notes;
     default:
       return state;
   }
