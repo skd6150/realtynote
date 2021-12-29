@@ -4,24 +4,20 @@ import {NoteItemAttributes} from '../Interfaces';
 import Card from './Card';
 
 interface MotionlessCardProps {
-  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
   item: NoteItemAttributes;
   pressCallback: () => void;
+  longPressCallback: () => void;
 }
 
 const MotionlessCard = ({
-  setEditMode,
+  longPressCallback,
   item,
   pressCallback,
 }: MotionlessCardProps) => {
   return (
     <Pressable
       delayLongPress={100}
-      onLongPress={() => {
-        setEditMode(prev => {
-          return !prev;
-        });
-      }}
+      onLongPress={longPressCallback}
       onPress={pressCallback}>
       <Card data={item} isEditMode={false} />
     </Pressable>
