@@ -19,10 +19,9 @@ const CameraModal = ({setCameraVisable, setNote, note}: CameraModalProps) => {
         quality: 1,
       });
       if (data) {
-        console.log(data);
         setNote(
           produce(note, draft => {
-            draft.photoUri.concat(data.uri);
+            draft.photoUri = draft.photoUri.concat(data.uri);
           }),
         );
       }
