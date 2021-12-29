@@ -6,7 +6,8 @@ import {
   REARRANGE_NOTES,
   NoteActions,
 } from '../Actions/noteActions';
-import initialState from '../initialState';
+
+const initialState: NoteItemAttributes[] = [];
 
 const reducer = (state = initialState, action: NoteActions) => {
   switch (action.type) {
@@ -18,7 +19,7 @@ const reducer = (state = initialState, action: NoteActions) => {
       });
     case UPDATE_NOTE:
       const idx = state.findIndex(note => note.key === action.key);
-      state.splice(idx, 0, action.note);
+      state.splice(idx, 1, action.note);
       return state;
     case REARRANGE_NOTES:
       return action.notes;
