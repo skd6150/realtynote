@@ -66,11 +66,15 @@ const RentalType = ({note, setNote}: RentalTypeProps) => {
           <TextInput
             style={styles.textInput}
             keyboardType="numeric"
-            value={JSON.stringify(note.deposit)}
+            value={note.deposit}
+            placeholder="0"
+            placeholderTextColor={'#000000'}
             onChangeText={text => {
+              text = text.replace(/[^0-9]/g, '');
+              if (text[0] == '0') return;
               setNote(
                 produce(note, draft => {
-                  draft.deposit = parseInt(text || '0');
+                  draft.deposit = text;
                 }),
               );
             }}
@@ -87,11 +91,15 @@ const RentalType = ({note, setNote}: RentalTypeProps) => {
             <TextInput
               style={styles.textInput}
               keyboardType="numeric"
-              value={JSON.stringify(note.monthlyFee)}
+              value={note.monthlyFee}
+              placeholder="0"
+              placeholderTextColor={'#000000'}
               onChangeText={text => {
+                text = text.replace(/[^0-9]/g, '');
+                if (text[0] == '0') return;
                 setNote(
                   produce(note, draft => {
-                    draft.monthlyFee = parseInt(text || '0');
+                    draft.monthlyFee = text;
                   }),
                 );
               }}
@@ -109,11 +117,15 @@ const RentalType = ({note, setNote}: RentalTypeProps) => {
             <TextInput
               style={styles.textInput}
               keyboardType="numeric"
-              value={JSON.stringify(note.managementFee)}
+              value={note.managementFee}
+              placeholder="0"
+              placeholderTextColor={'#000000'}
               onChangeText={text => {
+                text = text.replace(/[^0-9]/g, '');
+                if (text[0] == '0') return;
                 setNote(
                   produce(note, draft => {
-                    draft.managementFee = parseInt(text || '0');
+                    draft.managementFee = text;
                   }),
                 );
               }}
