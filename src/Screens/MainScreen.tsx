@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, FlatList, Pressable, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useSelector} from 'react-redux';
@@ -15,7 +15,10 @@ type MainScreenProps = {
 
 const MainScreen = ({navigation}: MainScreenProps) => {
   const notes = useSelector<Store, NoteItemAttributes[]>(state => state.Note);
-  const [data, setData] = useState(notes);
+  const [data, setData] = useState<NoteItemAttributes[]>([]);
+  useEffect(() => {
+    setData(notes);
+  }, [notes]);
   return (
     <View style={styles.wrapper}>
       <FlatList
