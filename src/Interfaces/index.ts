@@ -8,6 +8,7 @@ export {
 
 export {
   type MainScreenNavigationProps,
+  type EditScreenNavigationProps,
   type BrowseScreenNavigationProps,
   type BrowseScreenRouteProps,
   type PostScreenNavigationProps,
