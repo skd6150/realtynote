@@ -46,14 +46,14 @@ export interface NoteItemAttributes {
   address: string; // 주소
   map: any; // 네이버 지도 api
   rentalType: RentalType; // 임대조건
-  deposit: number; // 보증금 or 매매가
-  monthlyFee: number; // 월세
-  managementFee: number; // 관리비
+  deposit: string; // 보증금 or 매매가
+  monthlyFee: string; // 월세
+  managementFee: string; // 관리비
   photoUri: string[]; // 사진 URI
   roofFloor: EvaluationFactor; // 전체층
   floor: EvaluationFactor; // 해당층
   roomStructure: EvaluationFactor; // 방 개수
-  size: number; // 전용면적 (평)
+  size: string; // 전용면적 (평)
   direction?: Direction; // 방향
   options: Option[]; // 옵션
   realtorName: string; // 공인중개사 상호명

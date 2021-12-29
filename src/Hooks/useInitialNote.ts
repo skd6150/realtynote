@@ -14,9 +14,9 @@ export default function () {
     address: '',
     map: null,
     rentalType: RentalType.Trading,
-    deposit: 0,
-    monthlyFee: 0,
-    managementFee: 0,
+    deposit: '',
+    monthlyFee: '',
+    managementFee: '',
     photoUri: [],
     roofFloor: new EvaluationFactor(
       '전체층',
@@ -27,7 +27,7 @@ export default function () {
       ['반지하', '옥탑방'].concat([...Array(40).keys()].map(f => `${f + 1}층`)),
     ),
     roomStructure: new EvaluationFactor('구조', Object.values(Structure)),
-    size: 5,
+    size: '',
     options: [
       {name: '에어컨', available: false},
       {name: '냉장고', available: false},
