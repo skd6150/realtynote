@@ -16,7 +16,7 @@ const MotionlessCard = ({
 }: MotionlessCardProps) => {
   return (
     <Pressable
-      delayLongPress={100}
+      delayLongPress={200}
       onLongPress={longPressCallback}
       onPress={pressCallback}>
       <Card data={item} isEditMode={false} />
