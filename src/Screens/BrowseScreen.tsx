@@ -40,6 +40,7 @@ const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
           }}
         />
       ),
+      title: '',
     });
   });
   return (

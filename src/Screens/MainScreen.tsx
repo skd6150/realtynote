@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 import {View, StyleSheet, FlatList, Pressable, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useSelector} from 'react-redux';
@@ -19,6 +19,11 @@ const MainScreen = ({navigation}: MainScreenProps) => {
   useEffect(() => {
     setData(notes);
   }, [notes]);
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: '',
+    });
+  });
   return (
     <View style={styles.wrapper}>
       <FlatList

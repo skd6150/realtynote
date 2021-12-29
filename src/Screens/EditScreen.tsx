@@ -45,6 +45,7 @@ const EditScreen = gestureHandlerRootHOC(({navigation}: EditScreenProps) => {
         />
       ),
       headerLeft: () => React.Fragment,
+      title: '',
     });
   });
   return (

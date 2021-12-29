@@ -32,11 +32,12 @@ const PostScreen = ({navigation, route}: PostScreenProps) => {
     } else {
       dispatch(addNote(note));
     }
-    navigation.goBack();
+    navigation.popToTop();
   };
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => <HeaderRight label="저장" callback={save} />,
+      title: '',
     });
   });
   return (
