@@ -1,6 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useLayoutEffect} from 'react';
 import {View, Text, ScrollView, Modal} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {useInitialNote} from '../../Hooks';
+import {HeaderRight} from '../../Components';
+import {addNote, updateNote} from '../../Redux/Actions/noteActions';
 import Address from './Address';
 import RentalType from './RentalType';
 import Photo from './Photo';
@@ -20,8 +23,22 @@ type PostScreenProps = {
 };
 
 const PostScreen = ({navigation, route}: PostScreenProps) => {
-  const [note, setNote] = useState(useInitialNote());
+  const [note, setNote] = useState(route.params || useInitialNote());
   const [cameraVisable, setCameraVisable] = useState(false);
+  const dispatch = useDispatch();
+  const save = () => {
+    if (route.params) {
+      dispatch(updateNote(note.key, note));
+    } else {
+      dispatch(addNote(note));
+    }
+    navigation.goBack();
+  };
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <HeaderRight label="저장" callback={save} />,
+    });
+  });
   return (
     <ScrollView nestedScrollEnabled={true}>
       <Modal visible={cameraVisable} animationType="slide">
