@@ -20,7 +20,7 @@ export default function () {
     photoUri: [],
     roofFloor: new EvaluationFactor(
       '전체층',
-      [...Array(40).keys()].map(f => `${f + 1}층`),
+      ['측정안함'].concat([...Array(40).keys()].map(f => `${f + 1}층`)),
     ),
     floor: new EvaluationFactor(
       '해당층',

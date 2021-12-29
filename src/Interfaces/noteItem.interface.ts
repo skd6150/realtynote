@@ -5,6 +5,7 @@ export enum RentalType {
 }
 
 export enum Direction {
+  None = '측정안함',
   North = '북향',
   East = '동향',
   South = '남향',
