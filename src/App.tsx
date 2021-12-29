@@ -4,7 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import configureStore from './Redux/Reducer';
-import {MainScreen, BrowseScreen, EditScreen} from './Screens';
+import {MainScreen, BrowseScreen, PostScreen} from './Screens';
 import {StackParamList} from './Interfaces';
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -18,7 +18,7 @@ const App = () => {
           <Stack.Navigator initialRouteName="Main">
             <Stack.Screen name="Main" component={MainScreen} />
             <Stack.Screen name="Browse" component={BrowseScreen} />
-            <Stack.Screen name="Edit" component={EditScreen} />
+            <Stack.Screen name="Post" component={PostScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>

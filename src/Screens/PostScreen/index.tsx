@@ -10,16 +10,16 @@ import Environment from './Environment';
 import Realtor from './Realtor';
 import Memo from './Memo';
 import {
-  EditScreenNavigationProps,
-  EditScreenRouteProps,
+  PostScreenNavigationProps,
+  PostScreenRouteProps,
 } from '../../Interfaces';
 
-type EditScreenProps = {
-  navigation: EditScreenNavigationProps;
-  route: EditScreenRouteProps;
+type PostScreenProps = {
+  navigation: PostScreenNavigationProps;
+  route: PostScreenRouteProps;
 };
 
-const EditScreen = ({navigation, route}: EditScreenProps) => {
+const PostScreen = ({navigation, route}: PostScreenProps) => {
   const [note, setNote] = useState(useInitialNote());
   const [cameraVisable, setCameraVisable] = useState(false);
   return (
@@ -52,4 +52,4 @@ const EditScreen = ({navigation, route}: EditScreenProps) => {
   );
 };
 
-export default EditScreen;
+export default PostScreen;

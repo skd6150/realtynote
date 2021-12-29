@@ -10,7 +10,7 @@ export {
   type MainScreenNavigationProps,
   type BrowseScreenNavigationProps,
   type BrowseScreenRouteProps,
-  type EditScreenNavigationProps,
-  type EditScreenRouteProps,
+  type PostScreenNavigationProps,
+  type PostScreenRouteProps,
   type StackParamList,
 } from './navigation.interface';

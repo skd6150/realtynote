@@ -64,7 +64,7 @@ const MainScreen = gestureHandlerRootHOC(({navigation}: MainScreenProps) => {
         <Pressable
           style={styles.floatingButton}
           onPress={() => {
-            navigation.navigate('Edit');
+            navigation.navigate('Post');
           }}>
           <Icon name="add" size={36} color="#FFFFFF" />
         </Pressable>
