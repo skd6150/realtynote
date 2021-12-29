@@ -1,5 +1,13 @@
 import React, {useState, useLayoutEffect} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  ImageBackground,
+  Pressable,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   BrowseScreenNavigationProps,
   BrowseScreenRouteProps,
@@ -30,6 +38,12 @@ const Devider = () => <View style={styles.devider} />;
 
 const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
   const [note, setNote] = useState(route.params);
+  const [photoUriIdx, setPhotoUriIdx] = useState(0);
+  const changePhotoUri = (diff: number) => {
+    if (note.photoUri[photoUriIdx] === undefined) return;
+    const size = note.photoUri.length;
+    setPhotoUriIdx((photoUriIdx + size + diff) % size);
+  };
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -45,16 +59,26 @@ const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
   });
   return (
     <ScrollView>
-      <View
-        style={{
-          alignSelf: 'stretch',
-          height: 240,
-          backgroundColor: '#C4C4C4',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <Text>사진</Text>
-      </View>
+      {note.photoUri[photoUriIdx] !== undefined && (
+        <ImageBackground
+          source={{uri: note.photoUri[photoUriIdx]}}
+          style={styles.image}>
+          {note.photoUri.length > 1 && (
+            <View style={styles.imageButtonWrapper}>
+              <Pressable
+                style={styles.imageButton}
+                onPress={() => changePhotoUri(-1)}>
+                <Icon name="navigate-before" size={24} color={'#333333'} />
+              </Pressable>
+              <Pressable
+                style={styles.imageButton}
+                onPress={() => changePhotoUri(1)}>
+                <Icon name="navigate-next" size={24} color={'#333333'} />
+              </Pressable>
+            </View>
+          )}
+        </ImageBackground>
+      )}
       <View style={styles.cardWrapper}>
         <View style={styles.row}>
           <Text style={[styles.label, styles.text16]}>임대조건</Text>
@@ -162,6 +186,19 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 6,
+  },
+  image: {
+    alignSelf: 'stretch',
+    height: 240,
+    justifyContent: 'center',
+  },
+  imageButtonWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  imageButton: {
+    margin: 10,
+    backgroundColor: 'transparent',
   },
   sectionLabel: {
     alignSelf: 'stretch',
