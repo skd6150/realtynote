@@ -1,3 +1,4 @@
+import produce from 'immer';
 import {NoteItemAttributes} from '../../Interfaces';
 import {
   ADD_NOTE,
@@ -19,8 +20,9 @@ const reducer = (state = initialState, action: NoteActions) => {
       });
     case UPDATE_NOTE:
       const idx = state.findIndex(note => note.key === action.key);
-      state.splice(idx, 1, action.note);
-      return state;
+      return produce(state, draft => {
+        draft.splice(idx, 1, action.note);
+      });
     case REARRANGE_NOTES:
       return action.notes;
     default:
