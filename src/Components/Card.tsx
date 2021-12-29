@@ -7,9 +7,14 @@ import {NoteItemAttributes} from '../Interfaces';
 interface CardProps {
   data: NoteItemAttributes;
   isEditMode: boolean;
+  checkCallback?: (props: any) => any;
 }
 
-const Card: React.FC<CardProps> = ({data, isEditMode}: CardProps) => {
+const Card: React.FC<CardProps> = ({
+  data,
+  isEditMode,
+  checkCallback,
+}: CardProps) => {
   const [checked, setChecked] = useState(false);
 
   return (
@@ -20,11 +25,12 @@ const Card: React.FC<CardProps> = ({data, isEditMode}: CardProps) => {
             value="delete"
             status={checked ? 'checked' : 'unchecked'}
             color="#2196f3"
-            onPress={() =>
+            onPress={() => {
+              if (checkCallback) checkCallback(!checked);
               setChecked(prev => {
                 return !prev;
-              })
-            }
+              });
+            }}
           />
         </View>
       )}

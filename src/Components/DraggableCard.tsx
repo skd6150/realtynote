@@ -5,11 +5,15 @@ import {RenderItemParams} from 'react-native-draggable-flatlist';
 import {NoteItemAttributes} from '../Interfaces';
 import Card from './Card';
 
-const DraggableCard = ({item, drag}: RenderItemParams<NoteItemAttributes>) => {
+type DraggableCardProps = {
+  checkCallback?: (props: any) => any;
+} & RenderItemParams<NoteItemAttributes>;
+
+const DraggableCard = ({item, drag, checkCallback}: DraggableCardProps) => {
   return (
     <Pressable delayLongPress={100} onLongPress={drag}>
       <Animated.View>
-        <Card data={item} isEditMode={true} />
+        <Card data={item} isEditMode={true} checkCallback={checkCallback} />
       </Animated.View>
     </Pressable>
   );
