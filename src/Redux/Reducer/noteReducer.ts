@@ -18,9 +18,8 @@ const reducer = (state = initialState, action: NoteActions) => {
       });
     case UPDATE_NOTE:
       const idx = state.findIndex(note => note.key === action.key);
-      return state.splice(idx, 0, action.note);
-    case SWAP_NOTE:
-      return action.notes;
+      state.splice(idx, 0, action.note);
+      return state;
     default:
       return state;
   }
