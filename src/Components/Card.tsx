@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import {RadioButton} from 'react-native-paper';
 import {useStringfyRentalType} from '../Hooks';
 import {NoteItemAttributes} from '../Interfaces';
@@ -28,7 +28,11 @@ const Card: React.FC<CardProps> = ({data, isEditMode}: CardProps) => {
           />
         </View>
       )}
-      <View style={styles.noImage} />
+      {data.photoUri.length == 0 ? (
+        <View style={styles.noImage} />
+      ) : (
+        <Image source={{uri: data.photoUri[0]}} style={styles.image} />
+      )}
       <View style={styles.textWrapper}>
         <Text style={styles.text18}>{useStringfyRentalType(data)}</Text>
         <Text style={styles.text14}>{data.address}</Text>
@@ -56,6 +60,12 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     backgroundColor: '#C4C4C4',
+    borderRadius: 10,
+    margin: 15,
+  },
+  image: {
+    width: 90,
+    height: 90,
     borderRadius: 10,
     margin: 15,
   },
