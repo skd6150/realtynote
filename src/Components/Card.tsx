@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {RadioButton} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useStringfyRentalType} from '../Hooks';
 import {NoteItemAttributes} from '../Interfaces';
 
@@ -35,7 +36,9 @@ const Card: React.FC<CardProps> = ({
         </View>
       )}
       {data.photoUri.length == 0 ? (
-        <View style={styles.noImage} />
+        <View style={styles.noImage}>
+          <Icon name="image-not-supported" size={32} color={'#666666'} />
+        </View>
       ) : (
         <Image source={{uri: data.photoUri[0]}} style={styles.image} />
       )}
@@ -68,6 +71,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#C4C4C4',
     borderRadius: 10,
     margin: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     width: 90,
