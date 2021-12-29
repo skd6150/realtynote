@@ -1,3 +1,5 @@
+import 'react-native-get-random-values';
+import {v4 as uuidv4} from 'uuid';
 import {
   NoteItemAttributes,
   RentalType,
@@ -8,7 +10,7 @@ import {
 
 export default function () {
   const result: NoteItemAttributes = {
-    key: '0',
+    key: uuidv4(),
     address: '',
     map: null,
     rentalType: RentalType.Trading,
