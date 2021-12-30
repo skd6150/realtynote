@@ -52,6 +52,7 @@ const EditScreen = gestureHandlerRootHOC(
           <HeaderRight
             label="저장"
             callback={() => {
+              dispatch(rearrangeNotes(data, route.params.groupKey));
               navigation.goBack();
             }}
           />
