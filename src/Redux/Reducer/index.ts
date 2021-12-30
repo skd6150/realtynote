@@ -1,16 +1,16 @@
 import {AnyAction, combineReducers, createStore, Store} from 'redux';
 import {persistReducer, persistStore} from 'redux-persist';
 import storage from '@react-native-async-storage/async-storage';
-import Note from './noteReducer';
+import Group from './groupReducer';
 
-type StoreState = ReturnType<typeof Note>;
+type StoreState = ReturnType<typeof Group>;
 
 const persistConfig = {
   key: 'root',
   storage,
 };
 
-const reducer = combineReducers({Note});
+const reducer = combineReducers({Group});
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
