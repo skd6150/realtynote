@@ -23,14 +23,14 @@ type PostScreenProps = {
 };
 
 const PostScreen = ({navigation, route}: PostScreenProps) => {
-  const [note, setNote] = useState(route.params || useInitialNote());
+  const [note, setNote] = useState(route.params.note || useInitialNote());
   const [cameraVisable, setCameraVisable] = useState(false);
   const dispatch = useDispatch();
   const save = () => {
-    if (route.params) {
-      dispatch(updateNote(note.key, note));
+    if (route.params.note) {
+      dispatch(updateNote(note.key, note, route.params.groupKey));
     } else {
-      dispatch(addNote(note));
+      dispatch(addNote(note, route.params.groupKey));
     }
     navigation.popToTop();
   };

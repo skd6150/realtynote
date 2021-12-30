@@ -1,12 +1,16 @@
 import React, {useState, useEffect, useLayoutEffect} from 'react';
-import {View, StyleSheet, FlatList, Pressable, Text} from 'react-native';
+import {View, StyleSheet, FlatList, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useSelector} from 'react-redux';
 import {MotionlessCard} from '../Components';
-import {NoteItemAttributes, MainScreenNavigationProps} from '../Interfaces';
+import {
+  Group,
+  NoteItemAttributes,
+  MainScreenNavigationProps,
+} from '../Interfaces';
 
 interface Store {
-  Note: NoteItemAttributes[];
+  Group: Group[];
 }
 
 type MainScreenProps = {
@@ -14,11 +18,12 @@ type MainScreenProps = {
 };
 
 const MainScreen = ({navigation}: MainScreenProps) => {
-  const notes = useSelector<Store, NoteItemAttributes[]>(state => state.Note);
-  const [data, setData] = useState<NoteItemAttributes[]>([]);
+  const groups = useSelector<Store, Group[]>(state => state.Group);
+  const [groupIdx, setGroupIdx] = useState(0);
+  const [notes, setNotes] = useState<NoteItemAttributes[]>([]);
   useEffect(() => {
-    setData(notes);
-  }, [notes]);
+    setNotes(groups[groupIdx].list);
+  }, [groups]);
   useLayoutEffect(() => {
     navigation.setOptions({
       title: '',
@@ -27,19 +32,26 @@ const MainScreen = ({navigation}: MainScreenProps) => {
   return (
     <View style={styles.wrapper}>
       <FlatList
-        data={data}
+        data={notes}
         renderItem={({item}) => (
           <MotionlessCard
             item={item}
-            longPressCallback={() => navigation.navigate('Edit')}
-            pressCallback={() => navigation.navigate('Browse', item)}
+            longPressCallback={() =>
+              navigation.navigate('Edit', {groupKey: groups[groupIdx].key})
+            }
+            pressCallback={() =>
+              navigation.navigate('Browse', {
+                ...item,
+                groupKey: groups[groupIdx].key,
+              })
+            }
           />
         )}
       />
       <Pressable
         style={styles.floatingButton}
         onPress={() => {
-          navigation.navigate('Post');
+          navigation.navigate('Post', {groupKey: groups[groupIdx].key});
         }}>
         <Icon name="add" size={36} color="#FFFFFF" />
       </Pressable>

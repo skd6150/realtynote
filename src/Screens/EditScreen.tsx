@@ -8,82 +8,95 @@ import DraggableFlatList from 'react-native-draggable-flatlist';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderRight, DraggableCard} from '../Components';
-import {NoteItemAttributes, EditScreenNavigationProps} from '../Interfaces';
+import {
+  NoteItemAttributes,
+  EditScreenNavigationProps,
+  EditScreenRouteProps,
+  Group,
+} from '../Interfaces';
 import {rearrangeNotes, delNote} from '../Redux/Actions/noteActions';
 
 interface Store {
-  Note: NoteItemAttributes[];
+  Group: Group[];
 }
 
 type EditScreenProps = {
   navigation: EditScreenNavigationProps;
+  route: EditScreenRouteProps;
 };
 
-const EditScreen = gestureHandlerRootHOC(({navigation}: EditScreenProps) => {
-  const notes = useSelector<Store, NoteItemAttributes[]>(state => state.Note);
-  const [data, setData] = useState<NoteItemAttributes[]>(notes);
-  const ref = useRef<RNGHFlatList<NoteItemAttributes>>(null);
-  const dispatch = useDispatch();
-  const checked = notes.map(note => {
-    return {
-      key: note.key,
-      checked: false,
-    };
-  });
-  const checkCallback = (key: string) => (value: boolean) => {
-    const idx = checked.findIndex(note => note.key === key);
-    checked[idx].checked = value;
-  };
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <HeaderRight
-          label="저장"
-          callback={() => {
-            navigation.goBack();
-          }}
-        />
-      ),
-      headerLeft: () => React.Fragment,
-      title: '',
+const EditScreen = gestureHandlerRootHOC(
+  ({navigation, route}: EditScreenProps) => {
+    const groups = useSelector<Store, Group[]>(state => state.Group);
+    const [groupIdx, setGroupIdx] = useState(
+      groups.findIndex(group => group.key === route.params.groupKey),
+    );
+    const [data, setData] = useState<NoteItemAttributes[]>(
+      groups[groupIdx].list,
+    );
+    const ref = useRef<RNGHFlatList<NoteItemAttributes>>(null);
+    const dispatch = useDispatch();
+    const checked = groups[groupIdx].list.map(note => {
+      return {
+        key: note.key,
+        checked: false,
+      };
     });
-  });
-  return (
-    <View style={styles.wrapper}>
-      <View style={styles.flatListWrapper}>
-        <DraggableFlatList
-          ref={ref}
-          data={data}
-          onDragEnd={({data}) => setData(data)}
-          keyExtractor={item => item.key}
-          renderItem={({item, drag, isActive}) => (
-            <DraggableCard
-              item={item}
-              drag={drag}
-              isActive={isActive}
-              checkCallback={checkCallback(item.key)}
-            />
-          )}
-        />
-      </View>
-      <Pressable
-        onPress={() => {
-          dispatch(rearrangeNotes(data));
-          checked
-            .filter(note => note.checked === true)
-            .forEach(note => {
-              dispatch(delNote(note.key));
-            });
-          navigation.goBack();
-        }}>
-        <View style={styles.delete}>
-          <Icon name="delete" size={24} color="#FFFFFF" />
-          <Text style={styles.deleteFont}>삭제</Text>
+    const checkCallback = (key: string) => (value: boolean) => {
+      const idx = checked.findIndex(note => note.key === key);
+      checked[idx].checked = value;
+    };
+    useLayoutEffect(() => {
+      navigation.setOptions({
+        headerRight: () => (
+          <HeaderRight
+            label="저장"
+            callback={() => {
+              navigation.goBack();
+            }}
+          />
+        ),
+        headerLeft: () => React.Fragment,
+        title: '',
+      });
+    });
+    return (
+      <View style={styles.wrapper}>
+        <View style={styles.flatListWrapper}>
+          <DraggableFlatList
+            ref={ref}
+            data={data}
+            onDragEnd={({data}) => setData(data)}
+            keyExtractor={item => item.key}
+            renderItem={({item, drag, isActive}) => (
+              <DraggableCard
+                item={item}
+                drag={drag}
+                isActive={isActive}
+                checkCallback={checkCallback(item.key)}
+              />
+            )}
+          />
         </View>
-      </Pressable>
-    </View>
-  );
-});
+        <Pressable
+          onPress={() => {
+            dispatch(rearrangeNotes(data, route.params.groupKey));
+            checked
+              .filter(note => note.checked === true)
+              .forEach(note => {
+                dispatch(delNote(note.key, route.params.groupKey));
+              });
+            navigation.goBack();
+          }}>
+          <View style={styles.delete}>
+            <Icon name="delete" size={24} color="#FFFFFF" />
+            <Text style={styles.deleteFont}>삭제</Text>
+          </View>
+        </Pressable>
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   wrapper: {

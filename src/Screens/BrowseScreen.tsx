@@ -50,7 +50,7 @@ const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
         <HeaderRight
           label="수정"
           callback={() => {
-            navigation.navigate('Post', note);
+            navigation.navigate('Post', {note: note, groupKey: note.groupKey});
           }}
         />
       ),
