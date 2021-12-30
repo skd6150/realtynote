@@ -1,7 +1,7 @@
 import React, {useState, useLayoutEffect} from 'react';
 import {View, Text, ScrollView, Modal} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {useInitialNote} from '../../Hooks';
+import {useInitialNote, useValidate} from '../../Hooks';
 import {HeaderRight} from '../../Components';
 import {addNote, updateNote} from '../../Redux/Actions/noteActions';
 import Address from './Address';
@@ -27,12 +27,14 @@ const PostScreen = ({navigation, route}: PostScreenProps) => {
   const [cameraVisable, setCameraVisable] = useState(false);
   const dispatch = useDispatch();
   const save = () => {
-    if (route.params.note) {
-      dispatch(updateNote(note.key, note, route.params.groupKey));
-    } else {
-      dispatch(addNote(note, route.params.groupKey));
+    if (useValidate(note)) {
+      if (route.params.note) {
+        dispatch(updateNote(note.key, note, route.params.groupKey));
+      } else {
+        dispatch(addNote(note, route.params.groupKey));
+      }
+      navigation.popToTop();
     }
-    navigation.popToTop();
   };
   useLayoutEffect(() => {
     navigation.setOptions({
