@@ -1,13 +1,21 @@
-import React from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp} from '@react-navigation/native';
 import {NoteItemAttributes} from '.';
 
+interface GroupKey {
+  groupKey: string;
+}
+
+interface PostParams {
+  note?: NoteItemAttributes;
+  groupKey: string;
+}
+
 export type StackParamList = {
   Main: undefined;
-  Edit: undefined;
-  Browse: NoteItemAttributes;
-  Post: NoteItemAttributes | undefined;
+  Edit: GroupKey;
+  Browse: NoteItemAttributes & GroupKey;
+  Post: PostParams;
 };
 
 export type MainScreenNavigationProps = NativeStackNavigationProp<
@@ -32,3 +40,4 @@ export type PostScreenNavigationProps = NativeStackNavigationProp<
 
 export type BrowseScreenRouteProps = RouteProp<StackParamList, 'Browse'>;
 export type PostScreenRouteProps = RouteProp<StackParamList, 'Post'>;
+export type EditScreenRouteProps = RouteProp<StackParamList, 'Edit'>;
