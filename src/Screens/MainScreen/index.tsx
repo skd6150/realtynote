@@ -1,13 +1,16 @@
 import React, {useState, useEffect, useLayoutEffect} from 'react';
-import {View, StyleSheet, FlatList, Pressable} from 'react-native';
+import {View, StyleSheet, FlatList, Pressable, Modal} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useSelector} from 'react-redux';
-import {MotionlessCard} from '../Components';
+import {MotionlessCard} from '../../Components';
 import {
   Group,
   NoteItemAttributes,
   MainScreenNavigationProps,
-} from '../Interfaces';
+} from '../../Interfaces';
+import GroupPicker from './GroupPicker';
+import EditGroupModal from './EditGroupModal';
+import AddGroupModal from './AddGroupModal';
 
 interface Store {
   Group: Group[];
@@ -21,16 +24,54 @@ const MainScreen = ({navigation}: MainScreenProps) => {
   const groups = useSelector<Store, Group[]>(state => state.Group);
   const [groupIdx, setGroupIdx] = useState(0);
   const [notes, setNotes] = useState<NoteItemAttributes[]>([]);
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(-1);
+  const [addModalVisible, setAddModalVisible] = useState(false);
+  const changeGroupHandler = (idx: number) => {
+    setEditModalVisible(idx);
+    setMenuVisible(false);
+  };
+  const addGroupHandler = () => {
+    setAddModalVisible(true);
+    setMenuVisible(false);
+  };
   useEffect(() => {
-    setNotes(groups[groupIdx].list);
-  }, [groups]);
+    if (groups.length === 0) setNotes([]);
+    else setNotes(groups[groupIdx].list);
+  }, [groups, groupIdx]);
   useLayoutEffect(() => {
     navigation.setOptions({
+      headerLeft: () => (
+        <GroupPicker
+          visible={menuVisible}
+          setVisible={setMenuVisible}
+          groups={groups}
+          index={groupIdx}
+          changeGroupHandler={idx => setGroupIdx(idx)}
+          editGroupHandler={changeGroupHandler}
+          addGroupHandler={addGroupHandler}
+        />
+      ),
       title: '',
     });
   });
   return (
     <View style={styles.wrapper}>
+      <Modal
+        visible={editModalVisible !== -1}
+        transparent={true}
+        onRequestClose={() => setEditModalVisible(-1)}>
+        <EditGroupModal
+          group={groups[editModalVisible]}
+          setVisible={setEditModalVisible}
+        />
+      </Modal>
+      <Modal
+        visible={addModalVisible}
+        transparent={true}
+        onRequestClose={() => setAddModalVisible(false)}>
+        <AddGroupModal setVisible={setAddModalVisible} />
+      </Modal>
       <FlatList
         data={notes}
         renderItem={({item}) => (
