@@ -14,7 +14,7 @@ interface StructureProps {
 const Structure = ({note, setNote}: StructureProps) => {
   const [pyung, setPyung] = useState(note.size);
   const [squareMeter, setSquareMeter] = useState(
-    note.size ? JSON.stringify(parseFloat(pyung) * coef) : '',
+    note.size ? (parseFloat(pyung) * coef).toFixed(2) : '',
   );
   useEffect(() => {
     setNote(
