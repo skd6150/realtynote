@@ -1,14 +1,28 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, StyleSheet, TextInput} from 'react-native';
 import produce from 'immer';
 import {EvaluationPicker} from '../../Components';
 import {NoteItemAttributes} from '../../Interfaces';
+
+const coef = 3.30579;
+const regex: RegExp = /d*[.]\d{3}$/;
 
 interface StructureProps {
   note: NoteItemAttributes;
   setNote: React.Dispatch<React.SetStateAction<NoteItemAttributes>>;
 }
 const Structure = ({note, setNote}: StructureProps) => {
+  const [pyung, setPyung] = useState(note.size);
+  const [squareMeter, setSquareMeter] = useState(
+    note.size ? JSON.stringify(parseFloat(pyung) * coef) : '',
+  );
+  useEffect(() => {
+    setNote(
+      produce(note, draft => {
+        draft.size = pyung;
+      }),
+    );
+  }, [pyung]);
   const valueChangeHandler = (index: number) => (value: number) => {
     setNote(
       produce(note, draft => {
@@ -39,8 +53,45 @@ const Structure = ({note, setNote}: StructureProps) => {
   };
   return (
     <View style={styles.cardWrapper}>
-      <View style={styles.row}>
-        <Text style={styles.text16}>구조/면적</Text>
+      <Text style={[styles.title, styles.text16]}>구조/면적</Text>
+
+      <View style={styles.evaluationPickerList}>
+        <View style={styles.evaluationPickerWrapper}>
+          <Text style={styles.label}>전용면적(평)</Text>
+          <View style={styles.row}>
+            <TextInput
+              style={styles.textInput}
+              keyboardType="numeric"
+              value={pyung}
+              placeholder="0"
+              placeholderTextColor={'#000000'}
+              onChangeText={text => {
+                if (text[0] == '0' || regex.test(text)) return;
+                setPyung(text);
+                setSquareMeter((parseFloat(text) * coef).toFixed(2));
+              }}
+            />
+            <Text style={styles.text14}>평</Text>
+          </View>
+        </View>
+        <View style={styles.evaluationPickerWrapper}>
+          <Text style={styles.label}>{`전용면적(m\xB2)`}</Text>
+          <View style={styles.row}>
+            <TextInput
+              style={styles.textInput}
+              keyboardType="numeric"
+              value={squareMeter}
+              placeholder="0"
+              placeholderTextColor={'#000000'}
+              onChangeText={text => {
+                if (text[0] == '0' || regex.test(text)) return;
+                setSquareMeter(text);
+                setPyung((parseFloat(text) / coef).toFixed(2));
+              }}
+            />
+            <Text style={styles.text14}>{`m\xB2`}</Text>
+          </View>
+        </View>
       </View>
 
       <View style={styles.evaluationPickerList}>
@@ -90,15 +141,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 12,
     borderRadius: 10,
-    alignItems: 'center',
     zIndex: 2,
   },
-  row: {
-    alignSelf: 'stretch',
-    alignItems: 'center',
-    flexDirection: 'row',
+  title: {
     margin: 10,
     paddingHorizontal: 6,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   evaluationPickerList: {
     flexDirection: 'row',
@@ -109,6 +160,22 @@ const styles = StyleSheet.create({
   evaluationPickerWrapper: {
     width: '50%',
     padding: 10,
+  },
+  textInput: {
+    height: 30,
+    flex: 1,
+    marginRight: 5,
+    paddingVertical: 0,
+    paddingHorizontal: 10,
+    textAlign: 'right',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#DDE1E5',
+    backgroundColor: '#FBFBFB',
+  },
+  label: {
+    color: '#000000',
+    marginBottom: 2,
   },
   text16: {
     fontSize: 16,
