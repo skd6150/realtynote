@@ -19,7 +19,10 @@ const Structure = ({note, setNote}: StructureProps) => {
   useEffect(() => {
     setNote(
       produce(note, draft => {
-        draft.size = pyung;
+        draft.size =
+          parseInt(pyung) === parseFloat(pyung)
+            ? JSON.stringify(parseInt(pyung))
+            : pyung;
       }),
     );
   }, [pyung]);
