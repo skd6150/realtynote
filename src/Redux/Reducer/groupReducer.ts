@@ -31,10 +31,8 @@ const reducer = (state = initialState, action: NoteActions | GroupActions) => {
     case ADD_GROUP:
       return state.concat({key: uuidv4(), name: action.name, list: []});
     case DEL_GROUP:
-      return produce(state, draft => {
-        draft = draft.filter(group => {
-          return group.key !== action.groupKey;
-        });
+      return state.filter(group => {
+        return group.key !== action.groupKey;
       });
     case UPDATE_GROUP:
       return produce(state, draft => {
