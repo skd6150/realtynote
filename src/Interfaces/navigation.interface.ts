@@ -7,7 +7,7 @@ interface GroupKey {
 }
 
 interface PostParams {
-  note?: NoteItemAttributes;
+  note: NoteItemAttributes;
   groupKey: string;
 }
 

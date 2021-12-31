@@ -1,7 +1,7 @@
-import React, {useState, useLayoutEffect} from 'react';
+import React, {useState, useLayoutEffect, useEffect} from 'react';
 import {View, Text, ScrollView, Modal} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {useInitialNote, useValidate} from '../../Hooks';
+import {useValidate} from '../../Hooks';
 import {HeaderRight} from '../../Components';
 import {addNote, updateNote} from '../../Redux/Actions/noteActions';
 import Address from './Address';
@@ -23,7 +23,7 @@ type PostScreenProps = {
 };
 
 const PostScreen = ({navigation, route}: PostScreenProps) => {
-  const [note, setNote] = useState(route.params.note || useInitialNote());
+  const [note, setNote] = useState(route.params.note);
   const [cameraVisable, setCameraVisable] = useState(false);
   const dispatch = useDispatch();
   const save = () => {
