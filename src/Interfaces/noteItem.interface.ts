@@ -1,3 +1,5 @@
+import {Address} from '.';
+
 export enum RentalType {
   Trading = '매매',
   RentalMontlyFee = '월세',
@@ -45,7 +47,7 @@ export class EvaluationFactor {
 export interface NoteItemAttributes {
   key: string;
   address: string; // 주소
-  map: any; // 네이버 지도 api
+  map: Address; // 네이버 지도 api
   rentalType: RentalType; // 임대조건
   deposit: string; // 보증금 or 매매가
   monthlyFee: string; // 월세

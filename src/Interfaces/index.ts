@@ -18,3 +18,4 @@ export {
 } from './navigation.interface';
 
 export {type default as Group} from './group.interface';
+export {type Location, type Address} from './map.interface';
