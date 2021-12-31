@@ -4,6 +4,7 @@ import {useDispatch} from 'react-redux';
 import {useValidate} from '../../Hooks';
 import {HeaderRight} from '../../Components';
 import {addNote, updateNote} from '../../Redux/Actions/noteActions';
+import Map from './Map';
 import Address from './Address';
 import RentalType from './RentalType';
 import Photo from './Photo';
@@ -51,16 +52,7 @@ const PostScreen = ({navigation, route}: PostScreenProps) => {
           note={note}
         />
       </Modal>
-      <View
-        style={{
-          alignSelf: 'stretch',
-          height: 240,
-          backgroundColor: '#C4C4C4',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <Text>지도</Text>
-      </View>
+      <Map note={note} setNote={setNote} />
       <Address note={note} />
       <RentalType note={note} setNote={setNote} />
       <Photo note={note} setCameraVisable={setCameraVisable} />
