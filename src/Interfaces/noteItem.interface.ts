@@ -46,7 +46,6 @@ export class EvaluationFactor {
 
 export interface NoteItemAttributes {
   key: string;
-  address: string; // 주소
   map: Address; // 네이버 지도 api
   rentalType: RentalType; // 임대조건
   deposit: string; // 보증금 or 매매가

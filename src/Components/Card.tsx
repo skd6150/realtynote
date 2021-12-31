@@ -44,7 +44,7 @@ const Card: React.FC<CardProps> = ({
       )}
       <View style={styles.textWrapper}>
         <Text style={styles.text18}>{useStringfyRentalType(data)}</Text>
-        <Text style={styles.text14}>{data.address}</Text>
+        <Text style={styles.text14}>{data.map.address}</Text>
         <Text style={styles.text14}>
           {data.floor.evaluations[data.floor.idx]} {data.size}평
         </Text>

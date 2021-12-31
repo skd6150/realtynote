@@ -11,7 +11,7 @@ const Address = ({note}: AddressProps) => {
     <View style={styles.cardWrapper}>
       <View style={styles.row}>
         <Text style={[styles.label, styles.text16]}>주소</Text>
-        <Text style={[styles.content, styles.text14]}>{note.address}</Text>
+        <Text style={[styles.content, styles.text14]}>{note.map.address}</Text>
       </View>
     </View>
   );
