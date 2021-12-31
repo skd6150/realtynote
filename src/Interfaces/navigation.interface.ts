@@ -9,6 +9,7 @@ interface GroupKey {
 interface PostParams {
   note: NoteItemAttributes;
   groupKey: string;
+  isNew: boolean;
 }
 
 export type StackParamList = {

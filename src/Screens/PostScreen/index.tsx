@@ -28,10 +28,10 @@ const PostScreen = ({navigation, route}: PostScreenProps) => {
   const dispatch = useDispatch();
   const save = () => {
     if (useValidate(note)) {
-      if (route.params.note) {
-        dispatch(updateNote(note.key, note, route.params.groupKey));
-      } else {
+      if (route.params.isNew) {
         dispatch(addNote(note, route.params.groupKey));
+      } else {
+        dispatch(updateNote(note.key, note, route.params.groupKey));
       }
       navigation.popToTop();
     }

@@ -50,7 +50,11 @@ const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
         <HeaderRight
           label="수정"
           callback={() => {
-            navigation.navigate('Post', {note: note, groupKey: note.groupKey});
+            navigation.navigate('Post', {
+              note: note,
+              groupKey: note.groupKey,
+              isNew: false,
+            });
           }}
         />
       ),
@@ -91,7 +95,7 @@ const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
             )}
           </View>
         </View>
-        <Row label="주소" content={note.address} />
+        <Row label="주소" content={note.map.address} />
         <View
           style={{
             alignSelf: 'stretch',

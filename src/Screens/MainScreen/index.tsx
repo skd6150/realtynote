@@ -95,7 +95,11 @@ const MainScreen = ({navigation}: MainScreenProps) => {
         style={styles.floatingButton}
         onPress={() => {
           useInitialNote().then(note => {
-            navigation.navigate('Post', {note, groupKey: groups[groupIdx].key});
+            navigation.navigate('Post', {
+              note,
+              groupKey: groups[groupIdx].key,
+              isNew: true,
+            });
           });
         }}>
         <Icon name="add" size={36} color="#FFFFFF" />
