@@ -8,11 +8,24 @@ import {
   EvaluationFactor,
 } from '../Interfaces';
 
-export default function () {
+import {useGeolocation, useReverseGeocoder} from '.';
+
+const getInitialAddress = async () => {
+  const location = await useGeolocation();
+  if (location) {
+    return await useReverseGeocoder(location);
+  } else {
+    return {
+      location: {lat: 37.448751172408386, lng: 126.65607024981152},
+      address: '인천광역시 미추홀구 인하로 100',
+    };
+  }
+};
+
+export default async function () {
   const result: NoteItemAttributes = {
     key: uuidv4(),
-    address: '',
-    map: null,
+    map: await getInitialAddress(),
     rentalType: RentalType.Trading,
     deposit: '',
     monthlyFee: '',
