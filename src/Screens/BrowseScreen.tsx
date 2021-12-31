@@ -8,6 +8,7 @@ import {
   Pressable,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import NaverMapView, {Marker} from 'react-native-nmap';
 import {
   BrowseScreenNavigationProps,
   BrowseScreenRouteProps,
@@ -96,17 +97,25 @@ const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
           </View>
         </View>
         <Row label="주소" content={note.map.address} />
-        <View
-          style={{
-            alignSelf: 'stretch',
-            height: 180,
-            margin: 20,
-            backgroundColor: '#C4C4C4',
-            alignItems: 'center',
-            justifyContent: 'center',
+
+        <NaverMapView
+          style={styles.map}
+          center={{
+            latitude: note.map.location.lat,
+            longitude: note.map.location.lng,
+            zoom: 15,
           }}>
-          <Text>지도</Text>
-        </View>
+          <Marker
+            coordinate={{
+              latitude: note.map.location.lat,
+              longitude: note.map.location.lng,
+            }}
+            width={32}
+            height={32}>
+            <Icon name="my-location" size={32} color="#e91e63" />
+          </Marker>
+        </NaverMapView>
+
         <Text style={[styles.sectionLabel, styles.text18]}>구조/면적</Text>
         <Row
           label="층/건물층수"
@@ -211,6 +220,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     fontSize: 20,
     fontWeight: '600',
+  },
+  map: {
+    position: 'relative',
+    alignSelf: 'stretch',
+    paddingHorizontal: 20,
+    height: 180,
+    backgroundColor: '#C4C4C4',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  centerMarkerWrapper: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text20: {
     fontSize: 20,
