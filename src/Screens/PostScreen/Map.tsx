@@ -14,14 +14,16 @@ interface MapProps {
 const Map = ({note, setNote}: MapProps) => {
   const [center, setCenter] = useState(note.map.location);
   useEffect(() => {
-    useReverseGeocoder(center).then(address => {
-      setNote(
-        produce(note, draft => {
-          draft.map.location = center;
-          draft.map.address = address.address;
-        }),
-      );
-    });
+    useReverseGeocoder({location: center, address: note.map.address}).then(
+      address => {
+        setNote(
+          produce(note, draft => {
+            draft.map.location = center;
+            draft.map.address = address.address;
+          }),
+        );
+      },
+    );
   }, [center]);
   return (
     <View>
@@ -30,7 +32,6 @@ const Map = ({note, setNote}: MapProps) => {
         center={{
           latitude: center.lat,
           longitude: center.lng,
-          zoom: 16,
         }}
         onCameraChange={e => {
           setCenter({

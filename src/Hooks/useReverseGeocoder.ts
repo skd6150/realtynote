@@ -1,10 +1,10 @@
 import Config from 'react-native-config';
 import {Location, Address} from '../Interfaces';
 
-export default async function ({lat, lng}: Location): Promise<Address> {
+export default async function ({location, address}: Address): Promise<Address> {
   try {
     const response = await fetch(
-      `https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?coords=${lng},${lat}&output=json&orders=roadaddr`,
+      `https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?coords=${location.lng},${location.lat}&output=json&orders=roadaddr`,
       {
         method: 'GET',
         headers: {
@@ -14,19 +14,28 @@ export default async function ({lat, lng}: Location): Promise<Address> {
       },
     );
     const body = await response.json();
-    const area = [2, 3, 4].map(idx => {
+    if (body.results.length === 0) {
+      return {
+        location: {
+          lat: location.lat,
+          lng: location.lng,
+        },
+        address,
+      };
+    }
+    const area = [1, 2, 3, 4].map(idx => {
       return body.results[0].region[`area${idx}`].name;
     });
     const land = ['name', 'number1', 'number2'].map(idx => {
       return body.results[0].land[idx];
     });
-    const address = area.join(' ') + land.join(' ');
+    const new_address = area.join(' ') + land.join(' ');
     return {
       location: {
-        lat,
-        lng,
+        lat: location.lat,
+        lng: location.lng,
       },
-      address,
+      address: new_address,
     };
   } catch (e) {
     console.error(e);
