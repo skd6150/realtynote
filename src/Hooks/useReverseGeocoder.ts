@@ -23,13 +23,14 @@ export default async function ({location, address}: Address): Promise<Address> {
         address,
       };
     }
-    const area = [1, 2, 3, 4].map(idx => {
+    const area = [2, 3, 4].map(idx => {
       return body.results[0].region[`area${idx}`].name;
     });
     const land = ['name', 'number1', 'number2'].map(idx => {
       return body.results[0].land[idx];
     });
-    const new_address = area.join(' ') + land.join(' ');
+    const new_address =
+      area.join(' ') + land.join(' ') + body.results[0].land.addition0.value;
     return {
       location: {
         lat: location.lat,

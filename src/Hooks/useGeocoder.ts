@@ -20,7 +20,7 @@ export default async function (query: string): Promise<Address[]> {
           lat: parseFloat(element.y),
           lng: parseFloat(element.x),
         },
-        address: element.roadAddress,
+        address: element.roadAddress.split(' ').slice(1).join(' '),
       };
     });
   } catch (e) {
