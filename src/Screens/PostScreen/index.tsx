@@ -6,6 +6,7 @@ import {HeaderRight} from '../../Components';
 import {addNote, updateNote} from '../../Redux/Actions/noteActions';
 import Map from './Map';
 import Address from './Address';
+import AddressModal from './AddressModal';
 import RentalType from './RentalType';
 import Photo from './Photo';
 import CameraModal from './CameraModal';
@@ -26,6 +27,7 @@ type PostScreenProps = {
 const PostScreen = ({navigation, route}: PostScreenProps) => {
   const [note, setNote] = useState(route.params.note);
   const [cameraVisable, setCameraVisable] = useState(false);
+  const [addressModalVisable, setAddressModalVisable] = useState(false);
   const dispatch = useDispatch();
   const save = () => {
     if (useValidate(note)) {
@@ -52,8 +54,18 @@ const PostScreen = ({navigation, route}: PostScreenProps) => {
           note={note}
         />
       </Modal>
+      <Modal
+        visible={addressModalVisable}
+        animationType="slide"
+        transparent={true}>
+        <AddressModal
+          setAddressModalVisable={setAddressModalVisable}
+          setNote={setNote}
+          note={note}
+        />
+      </Modal>
       <Map note={note} setNote={setNote} />
-      <Address note={note} />
+      <Address setAddressModalVisable={setAddressModalVisable} note={note} />
       <RentalType note={note} setNote={setNote} />
       <Photo note={note} setCameraVisable={setCameraVisable} />
       <Structure note={note} setNote={setNote} />

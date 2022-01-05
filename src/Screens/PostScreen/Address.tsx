@@ -1,17 +1,28 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {NoteItemAttributes} from '../../Interfaces';
 
 interface AddressProps {
+  setAddressModalVisable: React.Dispatch<React.SetStateAction<boolean>>;
   note: NoteItemAttributes;
 }
 
-const Address = ({note}: AddressProps) => {
+const Address = ({note, setAddressModalVisable}: AddressProps) => {
   return (
     <View style={styles.cardWrapper}>
       <View style={styles.row}>
         <Text style={[styles.label, styles.text16]}>주소</Text>
-        <Text style={[styles.content, styles.text14]}>{note.map.address}</Text>
+        <Pressable
+          style={styles.content}
+          onPress={() => {
+            setAddressModalVisable(true);
+          }}>
+          <Text style={styles.text14}>
+            {`${note.map.address} `}
+            <Icon name="search" style={styles.search} />
+          </Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -39,6 +50,10 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 7,
+  },
+  search: {
+    fontSize: 12,
+    marginLeft: 5,
   },
   text16: {
     fontSize: 16,
