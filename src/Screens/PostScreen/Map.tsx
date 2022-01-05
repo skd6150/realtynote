@@ -1,44 +1,60 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
-import NaverMapView, {Marker} from 'react-native-nmap';
+import NaverMapView, {Coord} from 'react-native-nmap';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import produce from 'immer';
 import {useReverseGeocoder} from '../../Hooks';
-import {NoteItemAttributes} from '../../Interfaces';
+import {NoteItemAttributes, Location} from '../../Interfaces';
 
 interface MapProps {
   note: NoteItemAttributes;
   setNote: React.Dispatch<React.SetStateAction<NoteItemAttributes>>;
 }
 
+interface MapChangeEvent {
+  latitude: number;
+  longitude: number;
+  zoom: number;
+  contentsRegion: [Coord, Coord, Coord, Coord, Coord];
+  coveringRegion: [Coord, Coord, Coord, Coord, Coord];
+}
+
 const Map = ({note, setNote}: MapProps) => {
-  const [center, setCenter] = useState(note.map.location);
-  useEffect(() => {
-    useReverseGeocoder({location: center, address: note.map.address}).then(
-      address => {
+  const makeCameraChangeHandler = () => {
+    var initialized = false;
+    return (e: MapChangeEvent) => {
+      if (!initialized) {
+        initialized = true;
+        return;
+      }
+      const newLocation = {
+        lat: e.latitude,
+        lng: e.longitude,
+      };
+      useReverseGeocoder({
+        location: newLocation,
+        address: note.map.address,
+      }).then(newAddress => {
         setNote(
           produce(note, draft => {
-            draft.map.location = center;
-            draft.map.address = address.address;
+            draft.map.location = newLocation;
+            draft.map.address = newAddress.address;
           }),
         );
-      },
-    );
-  }, [center]);
+      });
+    };
+  };
+  const cameraChangeHandler = makeCameraChangeHandler();
   return (
     <View>
       <NaverMapView
         style={styles.map}
         center={{
-          latitude: center.lat,
-          longitude: center.lng,
+          latitude: note.map.location.lat,
+          longitude: note.map.location.lng,
         }}
-        onCameraChange={e => {
-          setCenter({
-            lat: e.latitude,
-            lng: e.longitude,
-          });
-        }}></NaverMapView>
+        onCameraChange={cameraChangeHandler}
+      />
       <View style={styles.centerMarkerWrapper}>
         <Icon name="my-location" size={32} color="#e91e63" />
       </View>
