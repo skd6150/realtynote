@@ -43,12 +43,14 @@ const Card: React.FC<CardProps> = ({
         <Image source={{uri: data.photoUri[0]}} style={styles.image} />
       )}
       <View style={styles.textWrapper}>
-        <Text style={styles.text18}>{useStringfyRentalType(data)}</Text>
-        <Text style={styles.text14}>{data.map.address}</Text>
+        <View>
+          <Text style={styles.text18}>{useStringfyRentalType(data)}</Text>
+          <Text style={[styles.text14, styles.address]}>
+            {data.map.address}
+          </Text>
+        </View>
         <Text style={styles.text14}>
-          {data.floor.evaluations[data.floor.idx]} {data.size}평
-        </Text>
-        <Text style={styles.text14}>
+          {data.floor.evaluations[data.floor.idx]} {data.size}평{' '}
           {data.roomStructure.evaluations[data.roomStructure.idx]}
         </Text>
       </View>
@@ -74,6 +76,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  address: {
+    maxHeight: 40,
+    overflow: 'hidden',
+  },
   image: {
     width: 90,
     height: 90,
@@ -81,8 +87,11 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   textWrapper: {
+    flex: 1,
     flexDirection: 'column',
-    padding: 15,
+    justifyContent: 'space-between',
+    margin: 15,
+    paddingVertical: 2,
   },
   buttonWrapper: {
     flexDirection: 'column',
