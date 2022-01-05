@@ -13,7 +13,7 @@ import {useGeolocation, useReverseGeocoder} from '.';
 const getInitialAddress = async () => {
   const location = await useGeolocation();
   if (location) {
-    return await useReverseGeocoder(location);
+    return await useReverseGeocoder({location, address: ''});
   } else {
     return {
       location: {lat: 37.448751172408386, lng: 126.65607024981152},
