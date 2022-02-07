@@ -9,7 +9,7 @@ interface GroupPickerProps {
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
   groups: Group[];
   index: number;
-  changeGroupHandler?: (value: number) => void;
+  changeGroupHandler: (value: number) => void;
   editGroupHandler: (props: any) => any;
   addGroupHandler: () => void;
 }
@@ -23,13 +23,7 @@ const GroupPicker = ({
   editGroupHandler,
   addGroupHandler,
 }: GroupPickerProps) => {
-  const [idx, setIdx] = useState(index);
   let ref = useRef<Menu>(null);
-  useEffect(() => {
-    if (changeGroupHandler) {
-      changeGroupHandler(idx);
-    }
-  }, [idx]);
   return (
     <View style={styles.wrapper}>
       <Menu
@@ -38,19 +32,19 @@ const GroupPicker = ({
         anchor={
           <Pressable style={styles.anchor} onPress={() => setVisible(true)}>
             <Icon name="bookmark" size={20} style={styles.icon} />
-            {groups.length !== 0 && <Text>{groups[idx].name}</Text>}
+            {groups.length !== 0 && <Text>{groups[index].name}</Text>}
           </Pressable>
         }
         onRequestClose={() => setVisible(false)}>
-        {groups.map((group, idx) => {
+        {groups.map((group, index) => {
           return (
             <MenuItem
-              key={`group-picker-${idx}`}
+              key={`group-picker-${index}`}
               onPress={() => {
-                setIdx(idx);
                 setVisible(false);
+                changeGroupHandler(index);
               }}
-              onLongPress={() => editGroupHandler(idx)}>
+              onLongPress={() => editGroupHandler(index)}>
               {group.name}
             </MenuItem>
           );

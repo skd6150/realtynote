@@ -38,7 +38,8 @@ const Row = ({label, content}: RowProps) => {
 const Devider = () => <View style={styles.devider} />;
 
 const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
-  const [note, setNote] = useState(route.params);
+  const [note, setNote] = useState(route.params.note);
+  const [groupKey, setGroupKey] = useState(route.params.groupKey);
   const [photoUriIdx, setPhotoUriIdx] = useState(0);
   const changePhotoUri = (diff: number) => {
     if (note.photoUri[photoUriIdx] === undefined) return;
@@ -53,8 +54,8 @@ const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
           callback={() => {
             navigation.navigate('Post', {
               note: note,
-              groupKey: note.groupKey,
               isNew: false,
+              groupKey,
             });
           }}
         />

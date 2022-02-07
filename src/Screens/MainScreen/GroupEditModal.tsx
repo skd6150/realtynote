@@ -11,10 +11,17 @@ interface Store {
 
 interface EditGroupModalProps {
   group: Group;
-  setVisible: React.Dispatch<React.SetStateAction<number>>;
+  activeGroupKey: string;
+  setVisible: React.Dispatch<React.SetStateAction<number | boolean>>;
+  setActiveGroupIdx: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const EditGroupModal = ({group, setVisible}: EditGroupModalProps) => {
+const EditGroupModal = ({
+  group,
+  activeGroupKey,
+  setVisible,
+  setActiveGroupIdx,
+}: EditGroupModalProps) => {
   const [name, setName] = useState(group.name);
   const dispatch = useDispatch();
   const groups = useSelector<Store, Group[]>(state => state.Group);
@@ -41,8 +48,13 @@ const EditGroupModal = ({group, setVisible}: EditGroupModalProps) => {
                 });
               } else {
                 dispatch(delGroup(group.key));
+                if (group.key === activeGroupKey)
+                  setActiveGroupIdx(prev => {
+                    if (prev === 0) return 0;
+                    return prev - 1;
+                  });
               }
-              setVisible(-1);
+              setVisible(false);
             }}>
             <Text style={styles.textWhite}>삭제</Text>
           </Pressable>
@@ -50,7 +62,7 @@ const EditGroupModal = ({group, setVisible}: EditGroupModalProps) => {
             style={[styles.button, styles.editButton]}
             onPress={() => {
               dispatch(renameGroup(group.key, name));
-              setVisible(-1);
+              setVisible(false);
             }}>
             <Text style={styles.textWhite}>수정</Text>
           </Pressable>

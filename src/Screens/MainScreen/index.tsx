@@ -9,8 +9,8 @@ import {
   MainScreenNavigationProps,
 } from '../../Interfaces';
 import GroupPicker from './GroupPicker';
-import EditGroupModal from './EditGroupModal';
-import AddGroupModal from './AddGroupModal';
+import GroupEditModal from './GroupEditModal';
+import GroupAddModal from './GroupAddModal';
 
 import {useInitialNote} from '../../Hooks';
 
@@ -24,33 +24,39 @@ type MainScreenProps = {
 
 const MainScreen = ({navigation}: MainScreenProps) => {
   const groups = useSelector<Store, Group[]>(state => state.Group);
-  const [groupIdx, setGroupIdx] = useState(0);
+  const [activeGroupIdx, setActiveGroupIdx] = useState(0);
   const [notes, setNotes] = useState<NoteItemAttributes[]>([]);
-  const [menuVisible, setMenuVisible] = useState(false);
-  const [editModalVisible, setEditModalVisible] = useState(-1);
+  const [groupPickerVisible, setGroupPickerVisible] = useState(false);
+  const [editModalActive, setEditModalActive] = useState<number | boolean>(
+    false,
+  );
   const [addModalVisible, setAddModalVisible] = useState(false);
-  const changeGroupHandler = (idx: number) => {
-    setEditModalVisible(idx);
-    setMenuVisible(false);
+
+  const editGroupHandler = (idx: number) => {
+    setEditModalActive(idx);
+    setGroupPickerVisible(false);
   };
+
   const addGroupHandler = () => {
     setAddModalVisible(true);
-    setMenuVisible(false);
+    setGroupPickerVisible(false);
   };
+
   useEffect(() => {
     if (groups.length === 0) setNotes([]);
-    else setNotes(groups[groupIdx].list);
-  }, [groups, groupIdx]);
+    else setNotes(groups[activeGroupIdx].list);
+  }, [groups, activeGroupIdx]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
         <GroupPicker
-          visible={menuVisible}
-          setVisible={setMenuVisible}
+          visible={groupPickerVisible}
+          setVisible={setGroupPickerVisible}
           groups={groups}
-          index={groupIdx}
-          changeGroupHandler={idx => setGroupIdx(idx)}
-          editGroupHandler={changeGroupHandler}
+          index={activeGroupIdx}
+          changeGroupHandler={idx => setActiveGroupIdx(idx)}
+          editGroupHandler={editGroupHandler}
           addGroupHandler={addGroupHandler}
         />
       ),
@@ -60,19 +66,21 @@ const MainScreen = ({navigation}: MainScreenProps) => {
   return (
     <View style={styles.wrapper}>
       <Modal
-        visible={editModalVisible !== -1}
+        visible={editModalActive !== false}
         transparent={true}
-        onRequestClose={() => setEditModalVisible(-1)}>
-        <EditGroupModal
-          group={groups[editModalVisible]}
-          setVisible={setEditModalVisible}
+        onRequestClose={() => setEditModalActive(false)}>
+        <GroupEditModal
+          group={groups[editModalActive as number]}
+          setVisible={setEditModalActive}
+          activeGroupKey={groups[activeGroupIdx].key}
+          setActiveGroupIdx={setActiveGroupIdx}
         />
       </Modal>
       <Modal
         visible={addModalVisible}
         transparent={true}
         onRequestClose={() => setAddModalVisible(false)}>
-        <AddGroupModal setVisible={setAddModalVisible} />
+        <GroupAddModal setVisible={setAddModalVisible} />
       </Modal>
       <FlatList
         data={notes}
@@ -80,12 +88,14 @@ const MainScreen = ({navigation}: MainScreenProps) => {
           <MotionlessCard
             item={item}
             longPressCallback={() =>
-              navigation.navigate('Edit', {groupKey: groups[groupIdx].key})
+              navigation.navigate('Edit', {
+                groupKey: groups[activeGroupIdx].key,
+              })
             }
             pressCallback={() =>
               navigation.navigate('Browse', {
-                ...item,
-                groupKey: groups[groupIdx].key,
+                note: item,
+                groupKey: groups[activeGroupIdx].key,
               })
             }
           />
@@ -97,7 +107,7 @@ const MainScreen = ({navigation}: MainScreenProps) => {
           useInitialNote().then(note => {
             navigation.navigate('Post', {
               note,
-              groupKey: groups[groupIdx].key,
+              groupKey: groups[activeGroupIdx].key,
               isNew: true,
             });
           });

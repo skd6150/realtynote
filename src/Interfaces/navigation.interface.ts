@@ -2,10 +2,6 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp} from '@react-navigation/native';
 import {NoteItemAttributes} from '.';
 
-interface GroupKey {
-  groupKey: string;
-}
-
 interface PostParams {
   note: NoteItemAttributes;
   groupKey: string;
@@ -14,8 +10,13 @@ interface PostParams {
 
 export type StackParamList = {
   Main: undefined;
-  Edit: GroupKey;
-  Browse: NoteItemAttributes & GroupKey;
+  Edit: {
+    groupKey: string;
+  };
+  Browse: {
+    note: NoteItemAttributes;
+    groupKey: string;
+  };
   Post: PostParams;
 };
 
