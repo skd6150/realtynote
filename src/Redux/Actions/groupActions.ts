@@ -14,10 +14,10 @@ export const delGroup = (groupKey: string) => {
   };
 };
 
-export const UPDATE_GROUP = 'GROUP/UPDATE' as const;
-export const updateGroup = (groupKey: string, name: string) => {
+export const RENAME_GROUP = 'GROUP/RENAME' as const;
+export const renameGroup = (groupKey: string, name: string) => {
   return {
-    type: UPDATE_GROUP,
+    type: RENAME_GROUP,
     groupKey,
     name,
   };
@@ -26,4 +26,4 @@ export const updateGroup = (groupKey: string, name: string) => {
 export type GroupActions =
   | ReturnType<typeof addGroup>
   | ReturnType<typeof delGroup>
-  | ReturnType<typeof updateGroup>;
+  | ReturnType<typeof renameGroup>;

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, Pressable, TextInput} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import Toast from 'react-native-toast-message';
-import {updateGroup, delGroup} from '../../Redux/Actions/groupActions';
+import {renameGroup, delGroup} from '../../Redux/Actions/groupActions';
 import {Group} from '../../Interfaces';
 
 interface Store {
@@ -49,7 +49,7 @@ const EditGroupModal = ({group, setVisible}: EditGroupModalProps) => {
           <Pressable
             style={[styles.button, styles.editButton]}
             onPress={() => {
-              dispatch(updateGroup(group.key, name));
+              dispatch(renameGroup(group.key, name));
               setVisible(-1);
             }}>
             <Text style={styles.textWhite}>수정</Text>

@@ -12,7 +12,7 @@ import {
 import {
   ADD_GROUP,
   DEL_GROUP,
-  UPDATE_GROUP,
+  RENAME_GROUP,
   GroupActions,
 } from '../Actions/groupActions';
 
@@ -34,7 +34,7 @@ const reducer = (state = initialState, action: NoteActions | GroupActions) => {
       return state.filter(group => {
         return group.key !== action.groupKey;
       });
-    case UPDATE_GROUP:
+    case RENAME_GROUP:
       return produce(state, draft => {
         draft[groupIdx].name = action.name;
       });
@@ -52,11 +52,8 @@ const reducer = (state = initialState, action: NoteActions | GroupActions) => {
       const noteIdx = state[groupIdx].list.findIndex(
         note => note.key === action.key,
       );
-      const newList = produce(state[groupIdx].list, draft => {
-        draft.splice(noteIdx, 1, action.note);
-      });
       return produce(state, draft => {
-        draft[groupIdx].list = newList;
+        draft[groupIdx].list.splice(noteIdx, 1, action.note);
       });
     case REARRANGE_NOTES:
       return produce(state, draft => {
