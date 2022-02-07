@@ -8,12 +8,12 @@ import {
   EvaluationFactor,
 } from '../Interfaces';
 
-import {useGeolocation, useReverseGeocoder} from '.';
+import {geolocation, reverseGeocoder} from '.';
 
 const getInitialAddress = async () => {
-  const location = await useGeolocation();
+  const location = await geolocation();
   if (location) {
-    return await useReverseGeocoder({location, address: ''});
+    return await reverseGeocoder({location, address: ''});
   } else {
     return {
       location: {lat: 37.448751172408386, lng: 126.65607024981152},

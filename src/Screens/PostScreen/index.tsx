@@ -1,7 +1,7 @@
 import React, {useState, useLayoutEffect, useEffect} from 'react';
 import {View, Text, ScrollView, Modal} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {useValidate} from '../../Hooks';
+import {validate} from '../../Utils';
 import {HeaderRight} from '../../Components';
 import {addNote, updateNote} from '../../Redux/Actions/noteActions';
 import Map from './Map';
@@ -30,7 +30,7 @@ const PostScreen = ({navigation, route}: PostScreenProps) => {
   const [addressModalVisable, setAddressModalVisable] = useState(false);
   const dispatch = useDispatch();
   const save = () => {
-    if (useValidate(note)) {
+    if (validate(note)) {
       if (route.params.isNew) {
         dispatch(addNote(note, route.params.groupKey));
       } else {

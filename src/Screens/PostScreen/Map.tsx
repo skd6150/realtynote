@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import NaverMapView, {Coord} from 'react-native-nmap';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import produce from 'immer';
-import {useReverseGeocoder} from '../../Hooks';
+import {reverseGeocoder} from '../../Utils';
 import {NoteItemAttributes, Location} from '../../Interfaces';
 
 interface MapProps {
@@ -31,7 +31,7 @@ const Map = ({note, setNote}: MapProps) => {
         lat: e.latitude,
         lng: e.longitude,
       };
-      useReverseGeocoder({
+      reverseGeocoder({
         location: newLocation,
         address: note.map.address,
       }).then(newAddress => {

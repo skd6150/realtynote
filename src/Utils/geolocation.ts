@@ -1,4 +1,3 @@
-import {useRef} from 'react';
 import {PermissionsAndroid} from 'react-native';
 import Geolocation, {GeoPosition} from 'react-native-geolocation-service';
 import {Location} from '../Interfaces';

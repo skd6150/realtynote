@@ -12,7 +12,7 @@ import GroupPicker from './GroupPicker';
 import GroupEditModal from './GroupEditModal';
 import GroupAddModal from './GroupAddModal';
 
-import {useInitialNote} from '../../Hooks';
+import {getInitialNote} from '../../Utils';
 
 interface Store {
   Group: Group[];
@@ -104,7 +104,7 @@ const MainScreen = ({navigation}: MainScreenProps) => {
       <Pressable
         style={styles.floatingButton}
         onPress={() => {
-          useInitialNote().then(note => {
+          getInitialNote().then(note => {
             navigation.navigate('Post', {
               note,
               groupKey: groups[activeGroupIdx].key,

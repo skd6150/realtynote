@@ -1,5 +1,5 @@
 import Config from 'react-native-config';
-import {Location, Address} from '../Interfaces';
+import {Address} from '../Interfaces';
 
 export default async function ({location, address}: Address): Promise<Address> {
   try {

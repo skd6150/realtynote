@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import produce from 'immer';
 import Toast from 'react-native-toast-message';
 import {NoteItemAttributes, Address} from '../../Interfaces';
-import {useGeocoder} from '../../Hooks';
+import {geocoder} from '../../Utils';
 
 interface AddressModalProps {
   setAddressModalVisable: React.Dispatch<React.SetStateAction<boolean>>;
@@ -46,7 +46,7 @@ const AddressModal = ({
   const [address, setAddress] = useState('');
   const [list, setList] = useState<Address[]>([]);
   const search = async () => {
-    const searchResult = await useGeocoder(address);
+    const searchResult = await geocoder(address);
     if (searchResult.length === 0)
       Toast.show({type: 'error', text1: '검색된 결과가 없습니다.'});
     else setList(searchResult);

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {RadioButton} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useStringfyRentalType} from '../Hooks';
+import {stringfyRentalType} from '../Utils';
 import {NoteItemAttributes} from '../Interfaces';
 
 interface CardProps {
@@ -44,7 +44,7 @@ const Card: React.FC<CardProps> = ({
       )}
       <View style={styles.textWrapper}>
         <View>
-          <Text style={styles.text18}>{useStringfyRentalType(data)}</Text>
+          <Text style={styles.text18}>{stringfyRentalType(data)}</Text>
           <Text style={[styles.text14, styles.address]}>
             {data.map.address}
           </Text>

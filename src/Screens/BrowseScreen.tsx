@@ -13,7 +13,7 @@ import {
   BrowseScreenNavigationProps,
   BrowseScreenRouteProps,
 } from '../Interfaces';
-import {useStringfyRentalType} from '../Hooks';
+import {stringfyRentalType} from '../Utils';
 import {HeaderRight} from '../Components';
 
 type BrowseScreenProps = {
@@ -89,7 +89,7 @@ const BrowseScreen = ({route, navigation}: BrowseScreenProps) => {
         <View style={styles.row}>
           <Text style={[styles.label, styles.text16]}>임대조건</Text>
           <View style={styles.content}>
-            <Text style={styles.text20}>{useStringfyRentalType(note)}</Text>
+            <Text style={styles.text20}>{stringfyRentalType(note)}</Text>
             {parseInt(note.managementFee || '0') !== 0 && (
               <Text style={styles.text12}>
                 (관리비 {parseInt(note.managementFee) / 10000}만원)
