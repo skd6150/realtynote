@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import produce from 'immer';
 import {RentalType as IRentalType, NoteItemAttributes} from '../../Interfaces';
+import {useTextInputHandler} from '../../Hooks';
 
 interface RentalTypeProps {
   note: NoteItemAttributes;
@@ -16,27 +17,50 @@ interface RentalTypeProps {
 }
 
 const RentalType = ({note, setNote}: RentalTypeProps) => {
-  const idx =
-    note.rentalType === IRentalType.Trading
-      ? 0
-      : note.rentalType === IRentalType.Rental
-      ? 1
-      : 2;
-  const [rentalType, setRentalType] = useState(idx);
+  const segControlValues = [
+    IRentalType.Trading,
+    IRentalType.Rental,
+    IRentalType.RentalMontlyFee,
+  ];
+  const [rentalType, setRentalType] = useState(note.rentalType);
+  const [deposit, depositHandler] = useTextInputHandler('');
+  const [monthlyFee, monthlyFeeHandler] = useTextInputHandler('');
+  const [managementFee, managementFeeHandler] = useTextInputHandler('');
+  useEffect(() => {
+    setNote(
+      produce(note, draft => {
+        draft.deposit = deposit;
+      }),
+    );
+  }, [deposit]);
+  useEffect(() => {
+    setNote(
+      produce(note, draft => {
+        draft.monthlyFee = monthlyFee;
+      }),
+    );
+  }, [monthlyFee]);
+  useEffect(() => {
+    setNote(
+      produce(note, draft => {
+        draft.managementFee = managementFee;
+      }),
+    );
+  }, [managementFee]);
   return (
     <KeyboardAvoidingView style={styles.cardWrapper} behavior="height">
       <View style={styles.row}>
         <Text style={[styles.label, styles.text16]}>임대조건</Text>
         <SegmentedControl
           style={styles.content}
-          values={[
-            IRentalType.Trading,
-            IRentalType.Rental,
-            IRentalType.RentalMontlyFee,
-          ]}
-          selectedIndex={rentalType}
+          values={segControlValues}
+          selectedIndex={segControlValues.findIndex(
+            value => value === rentalType,
+          )}
           onChange={event => {
-            setRentalType(event.nativeEvent.selectedSegmentIndex);
+            setRentalType(
+              segControlValues[event.nativeEvent.selectedSegmentIndex],
+            );
             setNote(
               produce(note, draft => {
                 switch (event.nativeEvent.selectedSegmentIndex) {
@@ -56,10 +80,10 @@ const RentalType = ({note, setNote}: RentalTypeProps) => {
         />
       </View>
       <View style={styles.row}>
-        {note.rentalType === IRentalType.Trading && (
+        {rentalType === IRentalType.Trading && (
           <Text style={[styles.label, styles.text14]}>매매가</Text>
         )}
-        {note.rentalType !== IRentalType.Trading && (
+        {rentalType !== IRentalType.Trading && (
           <Text style={[styles.label, styles.text14]}>보증금</Text>
         )}
         <View style={[styles.content, styles.textInputWrapper]}>
@@ -69,22 +93,14 @@ const RentalType = ({note, setNote}: RentalTypeProps) => {
             value={note.deposit}
             placeholder="0"
             placeholderTextColor={'#000000'}
-            onChangeText={text => {
-              text = text.replace(/[^0-9]/g, '');
-              if (text[0] == '0') return;
-              setNote(
-                produce(note, draft => {
-                  draft.deposit = text;
-                }),
-              );
-            }}
+            onChangeText={depositHandler}
           />
           <View>
             <Text style={styles.text14}>원</Text>
           </View>
         </View>
       </View>
-      {note.rentalType === IRentalType.RentalMontlyFee && (
+      {rentalType === IRentalType.RentalMontlyFee && (
         <View style={styles.row}>
           <Text style={[styles.label, styles.text14]}>월세</Text>
           <View style={[styles.content, styles.textInputWrapper]}>
@@ -94,15 +110,7 @@ const RentalType = ({note, setNote}: RentalTypeProps) => {
               value={note.monthlyFee}
               placeholder="0"
               placeholderTextColor={'#000000'}
-              onChangeText={text => {
-                text = text.replace(/[^0-9]/g, '');
-                if (text[0] == '0') return;
-                setNote(
-                  produce(note, draft => {
-                    draft.monthlyFee = text;
-                  }),
-                );
-              }}
+              onChangeText={monthlyFeeHandler}
             />
             <View>
               <Text style={styles.text14}>원</Text>
@@ -110,7 +118,7 @@ const RentalType = ({note, setNote}: RentalTypeProps) => {
           </View>
         </View>
       )}
-      {note.rentalType !== IRentalType.Trading && (
+      {rentalType !== IRentalType.Trading && (
         <View style={styles.row}>
           <Text style={[styles.label, styles.text14]}>관리비</Text>
           <View style={[styles.content, styles.textInputWrapper]}>
@@ -120,15 +128,7 @@ const RentalType = ({note, setNote}: RentalTypeProps) => {
               value={note.managementFee}
               placeholder="0"
               placeholderTextColor={'#000000'}
-              onChangeText={text => {
-                text = text.replace(/[^0-9]/g, '');
-                if (text[0] == '0') return;
-                setNote(
-                  produce(note, draft => {
-                    draft.managementFee = text;
-                  }),
-                );
-              }}
+              onChangeText={managementFeeHandler}
             />
             <View>
               <Text style={styles.text14}>원</Text>
