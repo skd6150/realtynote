@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import NaverMapView, {Coord} from 'react-native-nmap';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -45,6 +45,7 @@ const Map = ({note, setNote}: MapProps) => {
     };
   };
   const cameraChangeHandler = makeCameraChangeHandler();
+
   return (
     <View>
       <NaverMapView
@@ -59,6 +60,13 @@ const Map = ({note, setNote}: MapProps) => {
         <Icon name="my-location" size={32} color="#e91e63" />
       </View>
     </View>
+  );
+};
+
+const compare = (prev: MapProps, next: MapProps) => {
+  return (
+    prev.note.map.location.lat === next.note.map.location.lat &&
+    prev.note.map.location.lng === next.note.map.location.lng
   );
 };
 
@@ -82,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Map;
+export default React.memo(Map, compare);
