@@ -4,7 +4,7 @@ export {
   EvaluationFactor,
   Structure,
   type NoteItemAttributes,
-} from './noteItem.interface';
+} from './noteItem';
 
 export {
   type MainScreenNavigationProps,
@@ -15,7 +15,7 @@ export {
   type PostScreenNavigationProps,
   type PostScreenRouteProps,
   type StackParamList,
-} from './navigation.interface';
+} from './navigation';
 
-export {type default as Group} from './group.interface';
-export {type Location, type Address} from './map.interface';
+export {type default as Group} from './group';
+export {type Location, type Address} from './map';
