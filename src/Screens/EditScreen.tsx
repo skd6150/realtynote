@@ -31,7 +31,7 @@ const EditScreen = gestureHandlerRootHOC(
     const [groupIdx, setGroupIdx] = useState(
       groups.findIndex(group => group.key === route.params.groupKey),
     );
-    const [data, setData] = useState<NoteItemAttributes[]>(
+    const [list, setList] = useState<NoteItemAttributes[]>(
       groups[groupIdx].list,
     );
     const ref = useRef<RNGHFlatList<NoteItemAttributes>>(null);
@@ -52,7 +52,7 @@ const EditScreen = gestureHandlerRootHOC(
           <HeaderRight
             label="저장"
             callback={() => {
-              dispatch(rearrangeNotes(data, route.params.groupKey));
+              dispatch(rearrangeNotes(list, route.params.groupKey));
               navigation.goBack();
             }}
           />
@@ -66,8 +66,8 @@ const EditScreen = gestureHandlerRootHOC(
         <View style={styles.flatListWrapper}>
           <DraggableFlatList
             ref={ref}
-            data={data}
-            onDragEnd={({data}) => setData(data)}
+            data={list}
+            onDragEnd={({data}) => setList(data)}
             keyExtractor={item => item.key}
             renderItem={({item, drag, isActive}) => (
               <DraggableCard
@@ -81,7 +81,7 @@ const EditScreen = gestureHandlerRootHOC(
         </View>
         <Pressable
           onPress={() => {
-            dispatch(rearrangeNotes(data, route.params.groupKey));
+            dispatch(rearrangeNotes(list, route.params.groupKey));
             checked
               .filter(note => note.checked === true)
               .forEach(note => {
