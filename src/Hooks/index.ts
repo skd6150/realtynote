@@ -1,1 +1,1 @@
-export {default as useTextInputHandler} from './useTextInputHandler';
+export {default as usePriceTextInput} from './usePriceTextInput';

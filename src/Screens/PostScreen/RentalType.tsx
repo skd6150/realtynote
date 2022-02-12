@@ -9,7 +9,7 @@ import {
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
 import produce from 'immer';
 import {RentalType as IRentalType, NoteItemAttributes} from '../../Interfaces';
-import {useTextInputHandler} from '../../Hooks';
+import {usePriceTextInput} from '../../Hooks';
 
 interface RentalTypeProps {
   note: NoteItemAttributes;
@@ -23,9 +23,9 @@ const RentalType = ({note, setNote}: RentalTypeProps) => {
     IRentalType.RentalMontlyFee,
   ];
   const [rentalType, setRentalType] = useState(note.rentalType);
-  const [deposit, depositHandler] = useTextInputHandler('');
-  const [monthlyFee, monthlyFeeHandler] = useTextInputHandler('');
-  const [managementFee, managementFeeHandler] = useTextInputHandler('');
+  const [deposit, depositHandler] = usePriceTextInput('');
+  const [monthlyFee, monthlyFeeHandler] = usePriceTextInput('');
+  const [managementFee, managementFeeHandler] = usePriceTextInput('');
   useEffect(() => {
     setNote(
       produce(note, draft => {
